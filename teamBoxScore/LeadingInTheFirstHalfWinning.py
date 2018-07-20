@@ -41,17 +41,24 @@ def prob_of_winning_given(bool_point_diff, event):
 point_diff = make_point_diff_mat(df2)
 print(np.corrcoef(point_diff.T))
 
-x = point_diff[:, 0]
-y = point_diff[:, 1]
-b, m = polyfit(x, y, 1)
-plt.plot(x, y, '.')
-plt.plot(x, b + m * x, '-')
-
-plt.scatter(x, y)
-plt.ylabel("point differential: end of game")
-plt.xlabel("point differential: end of first half")
-plt.show()
-
 bool_point_diff = make_bool_point_diff_mat(df2)
 print(np.corrcoef(bool_point_diff.T))
-prob_of_winning_given(bool_point_diff, DOWN)
+
+probDown = prob_of_winning_given(bool_point_diff, DOWN)
+print(probDown)
+
+probUp = prob_of_winning_given(bool_point_diff, UP)
+print(probUp)
+
+probTie = prob_of_winning_given(bool_point_diff, TIE)
+print(probTie)
+
+# x = point_diff[:, 0]
+# y = point_diff[:, 1]
+# b, m = polyfit(x, y, 1)
+# plt.plot(x, y, '.')
+# plt.plot(x, b + m * x, '-')
+# plt.scatter(x, y)
+# plt.ylabel("point differential: end of game")
+# plt.xlabel("point differential: end of first half")
+# plt.show()
