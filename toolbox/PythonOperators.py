@@ -1,7 +1,7 @@
 import unittest
 
 
-class DataTypesNumeric(unittest.TestCase):
+class PythonOperators(unittest.TestCase):
     @classmethod
     def setUpClass(cls):
         cls.int1 = 10
