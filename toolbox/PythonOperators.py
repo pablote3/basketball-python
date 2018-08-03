@@ -8,9 +8,15 @@ class PythonOperators(unittest.TestCase):
         cls.int2 = 2
         cls.flt1 = 10.1
         cls.flt2 = 2.00
+        cls.str1 = "10.0"
         cls.boolT = True
         cls.boolF = False
         cls.none = None
+
+    def test_typecast(self):
+        self.assertEqual(10, int(self.flt1))
+        self.assertEqual(10.0, float(self.str1))
+        self.assertEqual(True, bool(self.str1))
 
     def test_add(self):
         self.assertEqual(12, self.int1 + self.int2)
