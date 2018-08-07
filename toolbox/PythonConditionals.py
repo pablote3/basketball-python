@@ -7,6 +7,16 @@ class PythonConditions(unittest.TestCase):
         self.assertEqual("Equal", condition_if(34, 34))
         self.assertEqual("Less", condition_if(34, 35))
 
+    def test_for(self):
+        self.assertEqual(3, condition_for(["apple", "banana", "cherry"]))
+        self.assertEqual(2, condition_for(["apple", "banana"]))
+        self.assertEqual(1, condition_for(["apple"]))
+        self.assertEqual(0, condition_for([]))
+
+    def test_range(self):
+        self.assertEqual(10, condition_range(5))
+        self.assertEqual(8, condition_range(4))
+
     def test_while(self):
         self.assertEqual(0, condition_while(5))
         self.assertEqual(1, condition_while(4))
@@ -25,6 +35,20 @@ def condition_if(int1, int2):
         return "Less"
     else:
         return "Equal"
+
+
+def condition_for(fruits):
+    i = 0
+    for x in fruits:
+        i += 1
+    return i
+
+
+def condition_range(int1):
+    i = 0
+    for x in range(int1):
+        i += 2
+    return i
 
 
 def condition_while(int1):
