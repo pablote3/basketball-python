@@ -2,13 +2,10 @@ import unittest
 
 
 class PythonConditions(unittest.TestCase):
-    @classmethod
-    def setUpClass(cls):
-        cls.int1 = 33
-        cls.int2 = 200
-
     def test_if(self):
-        self.assertTrue(condition(self.int1, self.int2))
+        self.assertEqual("Greater", condition(34, 33))
+        self.assertEqual("Equal", condition(34, 34))
+        self.assertEqual("Less", condition(34, 35))
 
 
 if __name__ == '__main__':
@@ -16,4 +13,9 @@ if __name__ == '__main__':
 
 
 def condition(int1, int2):
-    return int2 > int1
+    if int1 > int2:
+        return "Greater"
+    elif int1 < int2:
+        return "Less"
+    else:
+        return "Equal"
