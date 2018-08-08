@@ -12,16 +12,14 @@ class PythonDataTypes(unittest.TestCase):
         cls.boolT = True
         cls.boolF = False
         cls.none = None
-        cls.dt = datetime(2011, 10, 29, 20, 30, 21)
-        cls.strMultLines = """
+        cls.dtTm = datetime(2011, 10, 29, 20, 30, 21)
+        cls.strMultiLine = """
                               This is a longer string
                               that spans multiple lines
                            """
-        cls.strDouble = "doubleQuote"
-        cls.strInt = 5
-        cls.strFloat = 2.5
-        cls.strList = "blah"
-        cls.list = list(cls.strList)
+        cls.str1 = "doubleQuote"
+        cls.str2 = "blah"
+        cls.list = list(cls.str2)
 
     def test_instanceInt(self):
         self.assertTrue(isinstance(self.int1, int))
@@ -55,35 +53,35 @@ class PythonDataTypes(unittest.TestCase):
         #self.assertTrue(self.none == None)
 
     def test_dateType(self):
-        self.assertEqual(29, self.dt.day)
-        self.assertEqual(30, self.dt.minute)
-        self.assertEqual(date(2011, 10, 29), self.dt.date())
-        self.assertEqual(time(20, 30, 21), self.dt.time())
+        self.assertEqual(29, self.dtTm.day)
+        self.assertEqual(30, self.dtTm.minute)
+        self.assertEqual(date(2011, 10, 29), self.dtTm.date())
+        self.assertEqual(time(20, 30, 21), self.dtTm.time())
 
     def test_dateFormat(self):
-        self.assertEqual('10/29/2011 20:30', self.dt.strftime('%m/%d/%Y %H:%M'))
+        self.assertEqual('10/29/2011 20:30', self.dtTm.strftime('%m/%d/%Y %H:%M'))
         self.assertEqual(datetime(2009, 10, 31, 0, 0), datetime.strptime('20091031', '%Y%m%d'))
 
     def test_stringConvert(self):
-        self.assertEqual('5', (str(self.strInt)))
-        self.assertEqual('2.5', (str(self.strFloat)))
+        self.assertEqual('10', (str(self.int1)))
+        self.assertEqual('10.1', (str(self.flt1)))
 
     def test_stringComparison(self):
-        self.assertEqual('doubleQuote', self.strDouble)
-        self.assertEqual("doubleQuote", self.strDouble)
+        self.assertEqual('doubleQuote', self.str1)
+        self.assertEqual("doubleQuote", self.str1)
 
     def test_stringConcatenate(self):
-        self.assertEqual('doubleQuote blah', self.strDouble + ' ' + self.strList)
+        self.assertEqual('doubleQuote blah', self.str1 + ' ' + self.str2)
 
     def test_stringAsList(self):
         self.assertEqual(['b', 'l', 'a'], self.list[:3])
-        self.assertEqual('bla', self.strList[:3])
+        self.assertEqual('bla', self.str2[:3])
 
     def test_stringMultipleLines(self):
-        self.assertEqual(3, self.strMultLines.count('\n'))
+        self.assertEqual(3, self.strMultiLine.count('\n'))
 
     def test_stringError(self):
-        self.assertRaises(IndexError, lambda: self.strDouble[25])
+        self.assertRaises(IndexError, lambda: self.str1[25])
 
 
 if __name__ == '__main__':
