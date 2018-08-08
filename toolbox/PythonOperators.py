@@ -52,6 +52,8 @@ class PythonOperators(unittest.TestCase):
         self.assertTrue(self.int1 != self.int2)
         self.assertTrue(self.int1 == self.int1)
         self.assertTrue(self.int2 == self.flt2)
+        self.assertTrue(self.int1 > self.int2)
+        self.assertFalse(self.int1 > self.int1)
         self.assertTrue(self.int1 >= self.int2)
         self.assertTrue(self.int1 >= self.int1)
         self.assertTrue(self.int2 >= self.flt2)
@@ -60,6 +62,11 @@ class PythonOperators(unittest.TestCase):
         self.assertFalse(self.int1 is self.int2)
         self.assertTrue(self.int1 is self.int1)
         self.assertTrue(self.int2 is not self.flt2)
+
+    def test_containment(self):
+        self.assertTrue("." in self.str1)
+        self.assertFalse("m" in self.str1)
+        self.assertTrue("m" not in self.str1)
 
     def test_logical(self):
         self.assertTrue(self.boolT and self.boolT)

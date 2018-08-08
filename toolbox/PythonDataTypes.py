@@ -83,6 +83,5 @@ class PythonDataTypes(unittest.TestCase):
         self.assertEqual(3, self.strMultiLine.count('\n'))
 
 
-
 if __name__ == '__main__':
     unittest.main()
