@@ -65,6 +65,7 @@ class PythonDataTypes(unittest.TestCase):
     def test_stringConvert(self):
         self.assertEqual('10', (str(self.int1)))
         self.assertEqual('10.1', (str(self.flt1)))
+        self.assertRaises(IndexError, lambda: self.str1[25])
 
     def test_stringComparison(self):
         self.assertEqual('doubleQuote', self.str1)
@@ -72,6 +73,7 @@ class PythonDataTypes(unittest.TestCase):
 
     def test_stringConcatenate(self):
         self.assertEqual('doubleQuote blah', self.str1 + ' ' + self.str2)
+        self.assertRaises(TypeError, lambda: self.str1 + self.int1)
 
     def test_stringAsList(self):
         self.assertEqual(['b', 'l', 'a'], self.list[:3])
@@ -80,8 +82,6 @@ class PythonDataTypes(unittest.TestCase):
     def test_stringMultipleLines(self):
         self.assertEqual(3, self.strMultiLine.count('\n'))
 
-    def test_stringError(self):
-        self.assertRaises(IndexError, lambda: self.str1[25])
 
 
 if __name__ == '__main__':
