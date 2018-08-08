@@ -71,6 +71,7 @@ class PythonDataTypes(unittest.TestCase):
         self.assertEqual('doubleQuote', self.str1)
         self.assertEqual("doubleQuote", self.str1)
 
+    # noinspection PyTypeChecker
     def test_stringConcatenate(self):
         self.assertEqual('doubleQuote blah', self.str1 + ' ' + self.str2)
         self.assertRaises(TypeError, lambda: self.str1 + self.int1)
@@ -78,6 +79,9 @@ class PythonDataTypes(unittest.TestCase):
     def test_stringAsList(self):
         self.assertEqual(['b', 'l', 'a'], self.list[:3])
         self.assertEqual('bla', self.str2[:3])
+        self.assertTrue("Q" in self.str1)
+        self.assertFalse("m" in self.str1)
+        self.assertTrue("m" not in self.str1)
 
     def test_stringMultipleLines(self):
         self.assertEqual(3, self.strMultiLine.count('\n'))

@@ -63,11 +63,6 @@ class PythonOperators(unittest.TestCase):
         self.assertTrue(self.int1 is self.int1)
         self.assertTrue(self.int2 is not self.flt2)
 
-    def test_containment(self):
-        self.assertTrue("." in self.str1)
-        self.assertFalse("m" in self.str1)
-        self.assertTrue("m" not in self.str1)
-
     def test_logical(self):
         self.assertTrue(self.boolT and self.boolT)
         self.assertFalse(self.boolT and self.boolF)

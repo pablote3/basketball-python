@@ -39,7 +39,7 @@ def condition_if(int1, int2):
 
 def condition_for(fruits):
     i = 0
-    for x in fruits:
+    for _ in fruits:
         i += 1
     return i
 
