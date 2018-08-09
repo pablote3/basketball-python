@@ -19,7 +19,8 @@ class PythonDataTypes(unittest.TestCase):
                            """
         cls.str1 = "doubleQuote"
         cls.str2 = "blah"
-        cls.list = list(cls.str2)
+        cls.listStr = list("blue")
+        cls.listMix = ["hello", 1, True, -.5]
 
     def test_instanceInt(self):
         self.assertTrue(isinstance(self.int1, int))
@@ -67,9 +68,11 @@ class PythonDataTypes(unittest.TestCase):
         self.assertEqual('10.1', (str(self.flt1)))
         self.assertRaises(IndexError, lambda: self.str1[25])
 
-    def test_stringComparison(self):
+    def test_stringEvaluate(self):
         self.assertEqual('doubleQuote', self.str1)
         self.assertEqual("doubleQuote", self.str1)
+        self.assertEqual(3, self.strMultiLine.count('\n'))
+        self.assertEqual(11, len(self.str1))
 
     # noinspection PyTypeChecker
     def test_stringConcatenate(self):
@@ -77,14 +80,14 @@ class PythonDataTypes(unittest.TestCase):
         self.assertRaises(TypeError, lambda: self.str1 + self.int1)
 
     def test_stringAsList(self):
-        self.assertEqual(['b', 'l', 'a'], self.list[:3])
+        self.assertEqual(['b', 'l', 'u'], self.listStr[:3])
         self.assertEqual('bla', self.str2[:3])
         self.assertTrue("Q" in self.str1)
         self.assertFalse("m" in self.str1)
         self.assertTrue("m" not in self.str1)
 
-    def test_stringMultipleLines(self):
-        self.assertEqual(3, self.strMultiLine.count('\n'))
+    def test_list(self):
+        self.assertEqual(['b', 'l', 'u'], self.listStr[:3])
 
 
 if __name__ == '__main__':
