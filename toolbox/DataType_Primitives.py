@@ -19,8 +19,6 @@ class PythonDataTypes(unittest.TestCase):
                            """
         cls.str1 = "doubleQuote"
         cls.str2 = "blah"
-        cls.listStr = list("blue")
-        cls.listMix = ["hello", 1, True, -.5]
 
     def test_instanceInt(self):
         self.assertTrue(isinstance(self.int1, int))
@@ -80,14 +78,11 @@ class PythonDataTypes(unittest.TestCase):
         self.assertRaises(TypeError, lambda: self.str1 + self.int1)
 
     def test_stringAsList(self):
-        self.assertEqual(['b', 'l', 'u'], self.listStr[:3])
-        self.assertEqual('bla', self.str2[:3])
-        self.assertTrue("Q" in self.str1)
-        self.assertFalse("m" in self.str1)
-        self.assertTrue("m" not in self.str1)
-
-    def test_list(self):
-        self.assertEqual(['b', 'l', 'u'], self.listStr[:3])
+        list1 = list("blue")
+        self.assertEqual(['b', 'l', 'u'], list1[:3])
+        self.assertTrue("l" in list1)
+        self.assertFalse("m" in list1)
+        self.assertTrue("m" not in list1)
 
 
 if __name__ == '__main__':
