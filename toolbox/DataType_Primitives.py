@@ -2,7 +2,7 @@ import unittest
 from datetime import datetime, date, time
 
 
-class PythonDataTypes(unittest.TestCase):
+class DataTypePrimitives(unittest.TestCase):
     @classmethod
     def setUpClass(cls):
         cls.int1 = 10

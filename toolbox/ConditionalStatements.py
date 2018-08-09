@@ -1,7 +1,7 @@
 import unittest
 
 
-class PythonConditions(unittest.TestCase):
+class ConditionalStatements(unittest.TestCase):
     def test_if(self):
         self.assertEqual("Greater", condition_if(34, 33))
         self.assertEqual("Equal", condition_if(34, 34))
