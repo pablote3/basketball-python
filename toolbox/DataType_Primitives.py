@@ -78,7 +78,7 @@ class DataTypePrimitives(unittest.TestCase):
         self.assertRaises(TypeError, lambda: self.str1 + self.int1)
 
     def test_stringAsList(self):
-        list1 = list("blue")
+        list1 = list("blue")         #list constructor
         self.assertEqual(['b', 'l', 'u'], list1[:3])
         self.assertTrue("l" in list1)
         self.assertFalse("m" in list1)

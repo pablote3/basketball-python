@@ -2,13 +2,34 @@ import unittest
 
 
 class DataTypeCollections(unittest.TestCase):
+    def test_listSlicing(self):
+        slice1 = ['a', 'b', 'c']
+        self.assertEqual(3, len(slice1))        #length of list
+        self.assertEqual('c', slice1[2])
+        self.assertEqual('b', slice1[1])
+        self.assertEqual('a', slice1[0])
+        self.assertEqual('c', slice1[-1])       #last element
+        self.assertEqual('b', slice1[-2])       #next to last
 
-    def test_list(self):
-        my_list = ['a', 'b', 'c']
-        self.assertEqual(3, len(my_list))
-        self.assertEqual('a', my_list[0])
-        #my_list[-1]				'c'		last element
-        #my_list[-2]				'b'		next to last
+    def test_listMethods(self):
+        methods1 = ['a', 'b', 'c']
+        methods1.append('a')			        #add to end of list
+        self.assertEqual(4, len(methods1))
+        self.assertEqual('a', methods1[0])
+        self.assertEqual('a', methods1[3])
+        self.assertEqual('a', methods1[-1])     #last element
+
+        self.assertEqual(0, methods1.index('a'))
+        self.assertEqual(0, methods1.index('a', 0))
+        self.assertEqual(3, methods1.index('a', 1))
+        self.assertEqual(2, methods1.count('a'))
+
+        methods1[1] = 'z'    				    #replace list element
+        self.assertEqual('z', methods1[1])
+
+        methods1.remove('a')
+        self.assertEqual(3, len(methods1))
+        self.assertEqual('z', methods1[0])
 
 
 if __name__ == '__main__':
