@@ -24,12 +24,12 @@ class DataTypeCollections(unittest.TestCase):
         self.assertEqual(3, methods1.index('a', 1))
         self.assertEqual(2, methods1.count('a'))
 
-        methods1[1] = 'z'    				    #replace list element
-        self.assertEqual('z', methods1[1])
+        methods1[3] = 'z'    				    #replace list element
+        self.assertEqual('z', methods1[3])
 
-        methods1.remove('a')
+        methods1.remove('z')
         self.assertEqual(3, len(methods1))
-        self.assertEqual('z', methods1[0])
+        self.assertRaises(IndexError, lambda: methods1[3])
 
 
 if __name__ == '__main__':
