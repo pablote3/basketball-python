@@ -45,6 +45,11 @@ class DataTypeCollections(unittest.TestCase):
         sort1.sort()
         self.assertEqual('-.5', sort1[0])
 
+    def test_listNumbers(self):
+        numbers1 = [3, -5, .6, 17000, 7]
+        self.assertEqual(-5, min(numbers1))
+        self.assertEqual(17000, max(numbers1))
+
 
 if __name__ == '__main__':
     unittest.main()
