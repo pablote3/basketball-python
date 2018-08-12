@@ -39,6 +39,12 @@ class DataTypeCollections(unittest.TestCase):
         self.assertEqual(3, len(methods1))
         self.assertRaises(IndexError, lambda: methods1[3])
 
+    def test_listSort(self):
+        sort1 = ["hello", "1", "True", "-.5"]
+        self.assertEqual('hello', sort1[0])
+        sort1.sort()
+        self.assertEqual('-.5', sort1[0])
+
 
 if __name__ == '__main__':
     unittest.main()
