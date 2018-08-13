@@ -8,6 +8,8 @@ class ConditionalStatements(unittest.TestCase):
         self.assertEqual("Less", condition_if(34, 35))
 
     def test_for(self):
+        self.assertEqual(2, condition_for(["apple", "banana", "strawberry", "cherry"]))
+        self.assertEqual(3, condition_for(["apple", "banana", None, "cherry"]))
         self.assertEqual(3, condition_for(["apple", "banana", "cherry"]))
         self.assertEqual(2, condition_for(["apple", "banana"]))
         self.assertEqual(1, condition_for(["apple"]))
@@ -39,7 +41,11 @@ def condition_if(int1, int2):
 
 def condition_for(fruits):
     i = 0
-    for _ in fruits:
+    for fruit in fruits:
+        if fruit is None:
+            continue
+        elif fruit == "strawberry":
+            break
         i += 1
     return i
 
