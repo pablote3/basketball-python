@@ -8,7 +8,7 @@ class DataTypeCollections(unittest.TestCase):
         self.assertEqual('c', slice1[2])
         self.assertEqual('b', slice1[1])
         self.assertEqual('a', slice1[0])
-        self.assertEqual('c', slice1[-1])               #last element
+        self.assertEqual('c', slice1[-1])               #last element, slice relative to the end
         self.assertEqual('b', slice1[-2])               #next to last
 
         self.assertEqual(['a', 'b', 'c'], slice1[0:3])
@@ -18,6 +18,9 @@ class DataTypeCollections(unittest.TestCase):
         self.assertEqual(['b', 'c'], slice1[1:])        #from 2 to end
         self.assertEqual(['c'], slice1[2:])             #from 3 to end
         self.assertEqual(['a', 'b', 'c'], slice1[:])    #copy entire list
+
+        slice1[1:3] = ['d', 'e']                        #assign using sequence
+        self.assertEqual(list(['a', 'd', 'e']), slice1)
 
     def test_listMethods(self):
         methods1 = ['a', 'b', 'c']
