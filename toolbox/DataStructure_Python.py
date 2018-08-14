@@ -27,28 +27,35 @@ class DataTypeCollections(unittest.TestCase):
         self.assertEqual('a', methods1[3])
         self.assertEqual('a', methods1[-1])             #last element
 
-        methods1.insert(1, 'red')                       #insert at specific index
+        methods1.insert(1, 'red')                       #insert at specific index - slow, move all other indexes
         self.assertEqual('red', methods1[1])
-        methods1.pop(1)
-        self.assertEqual('b', methods1[1])              #remove from specific index
+        methods1.pop(1)                                 #remove from specific index - slow, move all other indexes
+        self.assertEqual('b', methods1[1])
 
-        self.assertEqual(0, methods1.index('a'))
-        self.assertEqual(0, methods1.index('a', 0))
+        self.assertEqual(0, methods1.index('a'))        #find first value
+        self.assertEqual(0, methods1.index('a', 0))     #find value with starting index
         self.assertEqual(3, methods1.index('a', 1))
-        self.assertEqual(2, methods1.count('a'))
+        self.assertEqual(2, methods1.count('a'))        #count number of values
+        self.assertEqual(True, 'a' in methods1)         #list contains value - slow, scan entire list
+        self.assertEqual(True, 'k' not in methods1)
 
         methods1[3] = 'z'    				            #replace list element
         self.assertEqual('z', methods1[3])
 
-        methods1.remove('z')
+        methods1.remove('z')                            #removes first instance of value
         self.assertEqual(3, len(methods1))
         self.assertRaises(IndexError, lambda: methods1[3])
+
+        methods1.extend([5, 'b'])                       #add items to existing list
+        self.assertEqual(5, len(methods1))
 
     def test_listSort(self):
         sort1 = ["hello", "1", "True", "-.5"]
         self.assertEqual('hello', sort1[0])
         sort1.sort()
-        self.assertEqual('-.5', sort1[0])
+        self.assertEqual(list(['-.5', '1', 'True', 'hello']), sort1)
+        sort1.sort(key=len)
+        self.assertEqual(list(['1', '-.5', 'True', 'hello']), sort1)
 
     def test_listNumbers(self):
         numbers1 = [3, -5, .6, 17000, 7]
