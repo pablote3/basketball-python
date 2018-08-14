@@ -27,6 +27,11 @@ class DataTypeCollections(unittest.TestCase):
         self.assertEqual('a', methods1[3])
         self.assertEqual('a', methods1[-1])             #last element
 
+        methods1.insert(1, 'red')                       #insert at specific index
+        self.assertEqual('red', methods1[1])
+        methods1.pop(1)
+        self.assertEqual('b', methods1[1])              #remove from specific index
+
         self.assertEqual(0, methods1.index('a'))
         self.assertEqual(0, methods1.index('a', 0))
         self.assertEqual(3, methods1.index('a', 1))
@@ -49,6 +54,18 @@ class DataTypeCollections(unittest.TestCase):
         numbers1 = [3, -5, .6, 17000, 7]
         self.assertEqual(-5, min(numbers1))
         self.assertEqual(17000, max(numbers1))
+
+    def test_listRange(self):
+        range1 = range(5)
+        self.assertEqual(range(0, 5), range1)
+        self.assertEqual([0, 1, 2, 3, 4], list(range1))
+
+    def test_listFromTuple(self):
+        tup1 = ('foo', 'bar', 'baz')
+        list1 = list(tup1)
+        self.assertEqual(['foo', 'bar', 'baz'], list1)
+        list1[1] = 'peep'
+        self.assertEqual(['foo', 'peep', 'baz'], list1)
 
     def test_tupleSimple(self):
         tup1 = 4, 5, 6, 5
