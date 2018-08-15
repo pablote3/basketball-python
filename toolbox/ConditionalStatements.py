@@ -15,9 +15,17 @@ class ConditionalStatements(unittest.TestCase):
         self.assertEqual(1, condition_for(["apple"]))
         self.assertEqual(0, condition_for([]))
 
-    def test_range(self):
-        self.assertEqual(10, condition_range(5))
-        self.assertEqual(8, condition_range(4))
+    def test_for_enumerate(self):
+        self.assertEqual(2, condition_for_enumerate(["apple", "banana", "strawberry", "cherry"]))
+        self.assertEqual(3, condition_for_enumerate(["apple", "banana", None, "cherry"]))
+        self.assertEqual(2, condition_for_enumerate(["apple", "banana", "cherry"]))
+        self.assertEqual(1, condition_for_enumerate(["apple", "banana"]))
+        self.assertEqual(0, condition_for_enumerate(["apple"]))
+        self.assertRaises(UnboundLocalError, lambda: condition_for_enumerate([]))
+
+    def test_for_range(self):
+        self.assertEqual(10, condition_for_range(5))
+        self.assertEqual(8, condition_for_range(4))
 
     def test_while(self):
         self.assertEqual(0, condition_while(5))
@@ -50,7 +58,16 @@ def condition_for(fruits):
     return i
 
 
-def condition_range(int1):
+def condition_for_enumerate(int1):
+    for i, fruit in enumerate(int1):
+        if fruit is None:
+            continue
+        elif fruit == "strawberry":
+            break
+    return i
+
+
+def condition_for_range(int1):
     i = 0
     for x in range(int1):
         i += 2
