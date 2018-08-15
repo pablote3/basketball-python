@@ -63,6 +63,9 @@ class DataTypeCollections(unittest.TestCase):
         sort2 = sorted(["hello", "1", "True", "-.5"])   #create sorted list
         self.assertEqual(list(['-.5', '1', 'True', 'hello']), sort2)
 
+        sort3 = reversed(["hello", "1", "True", "-.5"])  #create list in reverse order
+        self.assertEqual(list(['-.5', 'True', '1', 'hello']), list(sort3))
+
     def test_listNumbers(self):
         numbers1 = [3, -5, .6, 17000, 7]
         self.assertEqual(-5, min(numbers1))
