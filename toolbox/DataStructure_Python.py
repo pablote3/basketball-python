@@ -55,10 +55,13 @@ class DataTypeCollections(unittest.TestCase):
     def test_listSort(self):
         sort1 = ["hello", "1", "True", "-.5"]
         self.assertEqual('hello', sort1[0])
-        sort1.sort()
+        sort1.sort()                                    #sort existing list alphabetically
         self.assertEqual(list(['-.5', '1', 'True', 'hello']), sort1)
-        sort1.sort(key=len)
+        sort1.sort(key=len)                             #sort existing list by length
         self.assertEqual(list(['1', '-.5', 'True', 'hello']), sort1)
+
+        sort2 = sorted(["hello", "1", "True", "-.5"])   #create sorted list
+        self.assertEqual(list(['-.5', '1', 'True', 'hello']), sort2)
 
     def test_listNumbers(self):
         numbers1 = [3, -5, .6, 17000, 7]
