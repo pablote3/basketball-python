@@ -148,6 +148,11 @@ class DataTypeCollections(unittest.TestCase):
         set2.clear()                                    #reset set to empty
         self.assertEqual(set(), set2)
 
+    def test_setSubset(self):
+        set1 = {1, 2, 3, 4, 5}
+        self.assertEqual(True, {1, 2, 3}.issubset(set1))
+        self.assertEqual(True, set1.issuperset({1, 2, 3}))
+
     def test_tupleSimple(self):
         tup1 = 4, 5, 6, 5
         self.assertEqual((4, 5, 6, 5), tup1)
