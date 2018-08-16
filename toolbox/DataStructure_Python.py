@@ -118,11 +118,25 @@ class DataTypeCollections(unittest.TestCase):
         dict1.update(dict3)                             #merge with override of existing value
         self.assertEqual({'b': [1, 2, 3, 4], 'c': 9, 'x': 'new value', 'y': 4}, dict1)
 
+        self.assertEqual(9, dict1.get('c', 'Tree'))     #use default if key not found
+        self.assertEqual('Tree', dict1.get('g', 'Tree'))
+
     def test_dictFromSequences(self):
         key1 = range(5)
         value1 = reversed(range(5))
-        dict1 = dict(zip(key1, value1))
+        dict1 = dict(zip(key1, value1))                 #create dict from sequences
         self.assertEqual({0: 4, 1: 3, 2: 2, 3:1, 4: 0}, dict1)
+
+    def test_setMethods(self):
+        set1 = set([2, 2, 2, 1, 3, 3, 4, 5])            #create set with set keyword
+        self.assertEqual({1, 2, 3, 4, 5}, set1)
+        set2 = {4, 4, 5, 7, 6, 8, 3, 3}                 #create set with curly braces
+        self.assertEqual({3, 4, 5, 6, 7, 8}, set2)
+
+        self.assertEqual({1, 2, 3, 4, 5, 6, 7, 8}, set1.union(set2))    #returns distinct elements from either sets
+        self.assertEqual({1, 2, 3, 4, 5, 6, 7, 8}, set1 | set2)
+        self.assertEqual({3, 4, 5}, set1.intersection(set2))            #returns elements occurring in both sets
+        self.assertEqual({3, 4, 5}, set1 & set2)
 
     def test_tupleSimple(self):
         tup1 = 4, 5, 6, 5
