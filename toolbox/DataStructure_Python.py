@@ -76,6 +76,16 @@ class DataTypeCollections(unittest.TestCase):
         self.assertEqual(range(0, 5), range1)
         self.assertEqual([0, 1, 2, 3, 4], list(range1))
 
+    def test_listZip(self):
+        list1 = ['foo', 'bar', 'baz']
+        list2 = ['one', 'two', 'three']
+        zipped1 = zip(list1, list2)                       #pair up elements from two lists
+        self.assertEqual([('foo', 'one'), ('bar', 'two'), ('baz', 'three')], list(zipped1))
+
+        list3 = ['one', 'two']
+        zipped2 = zip(list1, list3)                       #pair up elements from two lists using shortest sequence
+        self.assertEqual([('foo', 'one'), ('bar', 'two')], list(zipped2))
+
     def test_listFromTuple(self):
         tup1 = ('foo', 'bar', 'baz')
         list1 = list(tup1)
@@ -104,6 +114,15 @@ class DataTypeCollections(unittest.TestCase):
         dict2 = {'x': 'another value', 'y': 4}
         dict1.update(dict2)                             #merge one dict into another
         self.assertEqual({'b': [1, 2, 3, 4], 'c': 9, 'x': 'another value', 'y': 4}, dict1)
+        dict3 = {'x': 'new value'}
+        dict1.update(dict3)                             #merge with override of existing value
+        self.assertEqual({'b': [1, 2, 3, 4], 'c': 9, 'x': 'new value', 'y': 4}, dict1)
+
+    def test_dictFromSequences(self):
+        key1 = range(5)
+        value1 = reversed(range(5))
+        dict1 = dict(zip(key1, value1))
+        self.assertEqual({0: 4, 1: 3, 2: 2, 3:1, 4: 0}, dict1)
 
     def test_tupleSimple(self):
         tup1 = 4, 5, 6, 5
