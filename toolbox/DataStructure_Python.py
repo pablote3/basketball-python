@@ -83,6 +83,28 @@ class DataTypeCollections(unittest.TestCase):
         list1[1] = 'peep'
         self.assertEqual(['foo', 'peep', 'baz'], list1)
 
+    def test_dictMethods(self):
+        dict1 = {'a': 'some value', 'b': [1, 2, 3, 4]}
+        self.assertEqual({'a': 'some value', 'b': [1, 2, 3, 4]}, dict1)
+        self.assertEqual([1, 2, 3, 4], dict1['b'])
+
+        dict1['c'] = 9                                  #insert new key
+        dict1[7] = 'an integer'
+        self.assertEqual({'a': 'some value', 'b': [1, 2, 3, 4], 'c': 9, 7: 'an integer'}, dict1)
+        self.assertEqual(True, 'b' in dict1)            #check if key exists
+        del dict1['a']                                  #delete using key
+        self.assertEqual({'b': [1, 2, 3, 4], 'c': 9, 7: 'an integer'}, dict1)
+        ret = dict1.pop(7)                              #delete using key and return value
+        self.assertEqual({'b': [1, 2, 3, 4], 'c': 9}, dict1)
+        self.assertEqual('an integer', ret)
+
+        self.assertEqual(2, len(list(dict1.keys())))    #return iterator of dict keys
+        self.assertEqual(2, len(list(dict1.values())))  #return iterator of dict values
+
+        dict2 = {'x': 'another value', 'y': 4}
+        dict1.update(dict2)                             #merge one dict into another
+        self.assertEqual({'b': [1, 2, 3, 4], 'c': 9, 'x': 'another value', 'y': 4}, dict1)
+
     def test_tupleSimple(self):
         tup1 = 4, 5, 6, 5
         self.assertEqual((4, 5, 6, 5), tup1)
