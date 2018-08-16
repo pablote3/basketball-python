@@ -138,6 +138,16 @@ class DataTypeCollections(unittest.TestCase):
         self.assertEqual({3, 4, 5}, set1.intersection(set2))            #returns elements occurring in both sets
         self.assertEqual({3, 4, 5}, set1 & set2)
 
+        set1.add(6)                                     #add element to set
+        self.assertEqual({1, 2, 3, 4, 5, 6}, set1)
+        set1.remove(6)                                  #remove element from set
+        self.assertEqual({1, 2, 3, 4, 5}, set1)
+        set1.pop()                                      #remove arbitrary element from set
+        self.assertEqual({2, 3, 4, 5}, set1)
+
+        set2.clear()                                    #reset set to empty
+        self.assertEqual(set(), set2)
+
     def test_tupleSimple(self):
         tup1 = 4, 5, 6, 5
         self.assertEqual((4, 5, 6, 5), tup1)
