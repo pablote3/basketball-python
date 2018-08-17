@@ -93,6 +93,11 @@ class DataTypeCollections(unittest.TestCase):
         list1[1] = 'peep'
         self.assertEqual(['foo', 'peep', 'baz'], list1)
 
+    def test_listComprehension(self):
+        list1 = ['a', 'as', 'bat', 'car', 'dove', 'python']
+        list2 = [x.upper() for x in list1 if len(x) > 2]    #filter and transform elements
+        self.assertEqual(['BAT', 'CAR', 'DOVE', 'PYTHON'], list2)
+
     def test_dictMethods(self):
         dict1 = {'a': 'some value', 'b': [1, 2, 3, 4]}
         self.assertEqual({'a': 'some value', 'b': [1, 2, 3, 4]}, dict1)
@@ -125,10 +130,10 @@ class DataTypeCollections(unittest.TestCase):
         key1 = range(5)
         value1 = reversed(range(5))
         dict1 = dict(zip(key1, value1))                 #create dict from sequences
-        self.assertEqual({0: 4, 1: 3, 2: 2, 3:1, 4: 0}, dict1)
+        self.assertEqual({0: 4, 1: 3, 2: 2, 3: 1, 4: 0}, dict1)
 
     def test_setMethods(self):
-        set1 = set([2, 2, 2, 1, 3, 3, 4, 5])            #create set with set keyword
+        set1 = {2, 2, 2, 1, 3, 3, 4, 5}                 #create set with set keyword
         self.assertEqual({1, 2, 3, 4, 5}, set1)
         set2 = {4, 4, 5, 7, 6, 8, 3, 3}                 #create set with curly braces
         self.assertEqual({3, 4, 5, 6, 7, 8}, set2)
@@ -152,6 +157,13 @@ class DataTypeCollections(unittest.TestCase):
         set1 = {1, 2, 3, 4, 5}
         self.assertEqual(True, {1, 2, 3}.issubset(set1))
         self.assertEqual(True, set1.issuperset({1, 2, 3}))
+
+    def test_setComprehension(self):
+        set1 = {'a', 'as', 'bat', 'car', 'dove', 'python'}
+        set2 = {len(x) for x in set1}                    #transform elements
+        self.assertEqual({1, 2, 3, 4, 6}, set2)
+        set3 = set(map(len, set1))                       #transform elements using map
+        self.assertEqual({1, 2, 3, 4, 6}, set3)
 
     def test_tupleSimple(self):
         tup1 = 4, 5, 6, 5
