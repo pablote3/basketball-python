@@ -160,9 +160,9 @@ class DataTypeCollections(unittest.TestCase):
 
     def test_setComprehension(self):
         set1 = {'a', 'as', 'bat', 'car', 'dove', 'python'}
-        set2 = {len(x) for x in set1}                    #transform elements
+        set2 = {len(x) for x in set1}                   #transform elements
         self.assertEqual({1, 2, 3, 4, 6}, set2)
-        set3 = set(map(len, set1))                       #transform elements using map
+        set3 = set(map(len, set1))                      #transform elements using map
         self.assertEqual({1, 2, 3, 4, 6}, set3)
 
     def test_tupleSimple(self):
