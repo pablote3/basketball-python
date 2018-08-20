@@ -20,6 +20,17 @@ class Functions(unittest.TestCase):
         self.assertEqual('Florida', function_str_title('FlOrIda'))
         self.assertEqual('South  Carolina', function_clean_strings('!south  carolina###'))
 
+    def test_lambda(self):
+        anon1 = lambda x: x * 2
+        self.assertEqual(8, anon1(4))
+
+    def test_generator(self):
+        gen1 = function_yield_squares()
+        y = []
+        for x in gen1:
+            y.append(x)
+        self.assertEqual([1, 4, 9, 16, 25, 36, 49, 64, 81, 100], y)
+
 
 if __name__ == '__main__':
     unittest.main()
@@ -47,15 +58,15 @@ def function_multiple_return_values_dict():
 
 
 def function_remove_punctuation(value):
-    return re.sub('[!#?]', '', value)   #remove special characters
+    return re.sub('[!#?]', '', value)  # remove special characters
 
 
 def function_str_string(value):
-    return str.strip(value)             #remove whitespace
+    return str.strip(value)  # remove whitespace
 
 
 def function_str_title(value):
-    return str.title(value)             #camel case
+    return str.title(value)  # camel case
 
 
 def function_clean_strings(value):
@@ -63,3 +74,8 @@ def function_clean_strings(value):
     value = function_remove_punctuation(value)
     value = function_str_title(value)
     return value
+
+
+def function_yield_squares(n = 10):
+    for i in range(1, n + 1):
+        yield i ** 2
