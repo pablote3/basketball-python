@@ -84,6 +84,10 @@ class DataTypePrimitives(unittest.TestCase):
         self.assertFalse("m" in list1)
         self.assertTrue("m" not in list1)
 
+    def test_float(self):
+        self.assertEqual(3.12, float(3.12))
+        self.assertRaises(ValueError, lambda: float('String'))
+
     def test_range(self):
         self.assertEqual([0, 1, 2, 3, 4, 5, 6, 7, 8, 9], list(range(10)))               #sequential iterator sequence
         self.assertEqual([0, 2, 4, 6, 8, 10, 12, 14, 16, 18], list(range(0, 20, 2)))    #start, end, step
