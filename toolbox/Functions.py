@@ -3,6 +3,7 @@ import re
 
 
 class Functions(unittest.TestCase):
+
     def test_parameters(self):
         self.assertEqual("Greater", function_parameters(34, 33))
         self.assertEqual("Greater", function_parameters(34))
@@ -14,10 +15,13 @@ class Functions(unittest.TestCase):
         self.assertEqual({'a': 5, 'b': 6, 'c': 7}, function_multiple_return_values_dict())
 
     def test_regular_expressions(self):
-        self.assertEqual('Alabama', function_str_string('  Alabama  '))
-        self.assertEqual('Georgia', function_remove_punctuation('?Georgia!'))
-        self.assertEqual('Georgia', function_str_title('georgia'))
-        self.assertEqual('Florida', function_str_title('FlOrIda'))
+        strip = lambda x: str.strip(x)                      #remove whitespace
+        title = lambda x: str.title(x)                      #camel case
+        punctuation = lambda x: re.sub('[!#?]', '', x)      #remove punctuation
+        self.assertEqual('Alabama', strip('  Alabama  '))
+        self.assertEqual('Georgia', punctuation('?Georgia!'))
+        self.assertEqual('Georgia', title('georgia'))
+        self.assertEqual('Florida', title('FlOrIda'))
         self.assertEqual('South  Carolina', function_clean_strings('!south  carolina###'))
 
     def test_lambda(self):
@@ -57,25 +61,16 @@ def function_multiple_return_values_dict():
     return {'a': a, 'b': b, 'c': c}
 
 
-def function_remove_punctuation(value):
-    return re.sub('[!#?]', '', value)  # remove special characters
-
-
-def function_str_string(value):
-    return str.strip(value)  # remove whitespace
-
-
-def function_str_title(value):
-    return str.title(value)  # camel case
-
-
 def function_clean_strings(value):
-    value = function_str_string(value)
-    value = function_remove_punctuation(value)
-    value = function_str_title(value)
+    strip = lambda x: str.strip(x)                      #remove whitespace
+    title = lambda x: str.title(x)                      #camel case
+    punctuation = lambda x: re.sub('[!#?]', '', x)      #remove punctuation
+    value = strip(value)
+    value = punctuation(value)
+    value = title(value)
     return value
 
 
-def function_yield_squares(n = 10):
+def function_yield_squares(n=10):
     for i in range(1, n + 1):
         yield i ** 2
