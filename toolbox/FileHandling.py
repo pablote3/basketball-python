@@ -8,10 +8,13 @@ class FileHandling:
         except:
             return 'openFailed'
 
-    def function_read_file(self):
+    def function_read_string(self, char):
         try:
             f = open(self, 'r')
-            return f.read()
+            if char > 0:
+                return f.read(char)
+            else:
+                return f.read()
         except:
             return 'openFailed'
         finally:
