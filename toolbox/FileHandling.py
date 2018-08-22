@@ -21,6 +21,17 @@ class FileHandling:
             if 'f' in locals():
                 f.close()
 
+    def function_open_file_append(self):
+        try:
+            f = open(self, 'a')
+            f.write("Appended line")
+        except:
+            return 'openFailed'
+        finally:
+            if 'f' in locals():
+                f.close()
+
+
     def function_open_file_write(self):
         try:
             with open(self, 'w') as f:
