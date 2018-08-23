@@ -1,4 +1,10 @@
+import os
+
 class FileHandling:
+
+    def function_delete_file(self):
+        if os.path.exists(self):
+            os.remove(self)
 
     def function_read_line(self):
         try:

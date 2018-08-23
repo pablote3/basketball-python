@@ -11,7 +11,6 @@ class TestFileHandling(unittest.TestCase):
 
     def test_read_file(self):
         self.assertEqual(2, FileHandling.function_read_line(self.absolute_path + '/paulRead.txt'))
-        self.assertEqual('openFailed', FileHandling.function_read_line(self.absolute_path + '/paulo.txt'))
         self.assertEqual(2, FileHandling.function_read_line(self.relative_path + '/paulRead.txt'))
         self.assertEqual('openFailed', FileHandling.function_read_line(self.relative_path + '/paulo.txt'))
         self.assertEqual('line1\nline2', FileHandling.function_read_string(self.relative_path + '/paulRead.txt', 0))
@@ -20,10 +19,9 @@ class TestFileHandling(unittest.TestCase):
 
     def test_append_write(self):
         self.assertEqual(4, FileHandling.function_append_add(self.absolute_path + '/paulAppend.txt'))
-#        self.assertEqual("complete", FileHandling.function_append_add(self.absolute_path + '/paulWrite.txt'))
+        self.assertEqual(2, FileHandling.function_append_add(self.absolute_path + '/paulAppender.txt'))
 
     @classmethod
     def tearDownClass(cls):
         FileHandling.function_append_remove(cls.absolute_path + '/paulAppend.txt')
-
-
+        FileHandling.function_delete_file(cls.relative_path + '/paulAppender.txt')
