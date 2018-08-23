@@ -6,8 +6,8 @@ from FileHandling import FileHandling
 class TestFileHandling(unittest.TestCase):
     @classmethod
     def setUpClass(cls):
-        cls.absolute_path = "/home/pablote/git/basketball-python/toolbox"
-        cls.relative_path = os.path.dirname(__file__)       #absolute working directory
+        cls.absolute_path = "/home/pablote/git/basketball-python/toolbox/files"
+        cls.relative_path = os.path.dirname(__file__) + "/files"       #absolute working directory
 
     def test_read_file(self):
         self.assertEqual(2, FileHandling.function_read_line(self.absolute_path + '/paulRead.txt'))
@@ -18,5 +18,10 @@ class TestFileHandling(unittest.TestCase):
         self.assertEqual('line', FileHandling.function_read_string(self.relative_path + '/paulRead.txt', 4))
         self.assertEqual('openFailed', FileHandling.function_read_string(self.relative_path + '/paulo.txt', 0))
 
-    def test_read_write(self):
-        self.assertEqual(2, FileHandling.function_read_line(self.absolute_path + '/paulRead.txt'))
+    def test_append_write(self):
+        self.assertEqual(3, FileHandling.function_append_add(self.absolute_path + '/paulAppend.txt'))
+#        self.assertEqual("complete", FileHandling.function_append_add(self.absolute_path + '/paulWrite.txt'))
+
+#    def tearDownClass(cls):
+
+

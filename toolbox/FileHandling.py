@@ -21,16 +21,19 @@ class FileHandling:
             if 'f' in locals():
                 f.close()
 
-    def function_open_file_append(self):
+    def function_append_add(self):
         try:
             f = open(self, 'a')
-            f.write("Appended line")
+            f.write("\nAppended line")
+            f.close()
+            with open(self, 'r') as f:
+                lines = [x.rstrip() for x in f]
+            return lines.__len__()
         except:
-            return 'openFailed'
+            return "openFailed"
         finally:
             if 'f' in locals():
                 f.close()
-
 
     def function_open_file_write(self):
         try:
