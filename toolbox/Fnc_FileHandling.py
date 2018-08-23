@@ -1,12 +1,13 @@
 import os
 
-class FileHandling:
 
-    def function_delete_file(self):
+class FncFileHandling:
+
+    def delete_file(self):
         if os.path.exists(self):
             os.remove(self)
 
-    def function_read_line(self):
+    def read_line(self):
         try:
             with open(self, 'r') as f:              #auto file close when block exits
                 lines = [x.rstrip() for x in f]
@@ -14,7 +15,7 @@ class FileHandling:
         except:
             return 'openFailed'
 
-    def function_read_string(self, char):
+    def read_string(self, char):
         try:
             f = open(self, 'r')
             if char > 0:
@@ -27,10 +28,10 @@ class FileHandling:
             if 'f' in locals():
                 f.close()
 
-    def function_append_add(self):
+    def append_line(self, value):
         try:
             f = open(self, 'a')
-            f.write("\nAppended line")
+            f.write(value)
             f.close()
             with open(self, 'r') as f:
                 lines = [x.rstrip() for x in f]
@@ -41,13 +42,13 @@ class FileHandling:
             if 'f' in locals():
                 f.close()
 
-    def function_append_remove(self):
+    def remove_line(self, value):
         try:
             f = open(self, 'r+')
             d = f.readlines()
             f.seek(0)
             for i in d:
-                if i != "Appended line" and i != "\n":
+                if i != "Appended" and i != "\n":
                     f.write(i)
             f.truncate()
         except:
@@ -56,7 +57,7 @@ class FileHandling:
             if 'f' in locals():
                 f.close()
 
-    def function_open_file_write(self):
+    def open_file_write(self):
         try:
             with open(self, 'w') as f:
                 lines = [x.rstrip() for x in f]     #auto file close when block exits
