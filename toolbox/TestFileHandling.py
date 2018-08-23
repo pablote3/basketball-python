@@ -19,9 +19,11 @@ class TestFileHandling(unittest.TestCase):
         self.assertEqual('openFailed', FileHandling.function_read_string(self.relative_path + '/paulo.txt', 0))
 
     def test_append_write(self):
-        self.assertEqual(3, FileHandling.function_append_add(self.absolute_path + '/paulAppend.txt'))
+        self.assertEqual(4, FileHandling.function_append_add(self.absolute_path + '/paulAppend.txt'))
 #        self.assertEqual("complete", FileHandling.function_append_add(self.absolute_path + '/paulWrite.txt'))
 
-#    def tearDownClass(cls):
+    @classmethod
+    def tearDownClass(cls):
+        FileHandling.function_append_remove(cls.absolute_path + '/paulAppend.txt')
 
 

@@ -35,6 +35,21 @@ class FileHandling:
             if 'f' in locals():
                 f.close()
 
+    def function_append_remove(self):
+        try:
+            f = open(self, 'r+')
+            d = f.readlines()
+            f.seek(0)
+            for i in d:
+                if i != "Appended line" and i != "\n":
+                    f.write(i)
+            f.truncate()
+        except:
+            return "openFailed"
+        finally:
+            if 'f' in locals():
+                f.close()
+
     def function_open_file_write(self):
         try:
             with open(self, 'w') as f:
