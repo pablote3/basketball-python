@@ -1,13 +1,13 @@
 import unittest
 import os
-from Fnc_FileHandling import FncFileHandling
+from python.Function_FileIO import FncFileHandling
 
 
 class TestFileHandling(unittest.TestCase):
     @classmethod
     def setUpClass(cls):
-        cls.abs_path = "/home/pablote/git/basketball-python/toolbox/files"      #absolute path
-        cls.rel_path = os.path.dirname(__file__) + "/files"                     #relative working directory
+        cls.abs_path = "/home/pablote/git/basketball-python/toolbox/python/files"   #absolute path
+        cls.rel_path = os.path.dirname(__file__) + "/files"                         #relative working directory
         FncFileHandling.create_file(cls.abs_path + "/paulCreate.txt")
 
     def test_create_file(self):
