@@ -8,7 +8,7 @@ class TestFileHandling(unittest.TestCase):
     def setUpClass(cls):
         cls.abs_path = "/home/pablote/git/basketball-python/toolbox/files"      #absolute path
         cls.rel_path = os.path.dirname(__file__) + "/files"                     #relative working directory
-        FncFileHandling.append_line(cls.abs_path + "/paulCreate.txt", "\nAppended")
+        FncFileHandling.create_file(cls.abs_path + "/paulCreate.txt")
 
     def test_create_file(self):
         self.assertEqual("createSuccess", FncFileHandling.create_file(self.abs_path + "/paulMade.txt"))
@@ -25,10 +25,6 @@ class TestFileHandling(unittest.TestCase):
     def test_append_file(self):
         self.assertEqual(3, FncFileHandling.append_line(self.abs_path + "/paulAppend.txt", "Appended"))    #exists
         self.assertEqual(1, FncFileHandling.append_line(self.abs_path + "/paulAppender.txt", "Appended"))  #not exist
-
-    # def test_write_file(self):
-    #     self.assertEqual(3, FncFileHandling.append_line(self.abs_path + "/paulAppend.txt", "Appended"))
-    #     self.assertEqual(1, FncFileHandling.append_line(self.abs_path + "/paulAppender.txt", "Appended"))
 
     def test_delete_file(self):
         self.assertEqual("deleteSuccess", FncFileHandling.delete_file(self.abs_path + "/paulCreate.txt"))

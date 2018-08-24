@@ -67,13 +67,3 @@ class FncFileHandling:
         finally:
             if "f" in locals():
                 f.close()
-
-    def open_file_write(self):
-        try:
-            with open(self, "w") as f:
-                lines = [x.rstrip() for x in f]     #auto file close when block exits
-        except:
-            return "openFailed"
-        else:
-            f.close()
-            return "openSuccess"
