@@ -6,6 +6,9 @@ class FncFileHandling:
     def delete_file(self):
         if os.path.exists(self):
             os.remove(self)
+            return 'deleteSuccess'
+        else:
+            return 'fileNotFound'
 
     def read_line(self):
         try:
@@ -48,7 +51,7 @@ class FncFileHandling:
             d = f.readlines()
             f.seek(0)
             for i in d:
-                if i != "Appended" and i != "\n":
+                if i != value and i != "\n":
                     f.write(i)
             f.truncate()
         except:
