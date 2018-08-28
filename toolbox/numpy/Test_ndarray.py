@@ -21,22 +21,34 @@ class TestNumpyArray(unittest.TestCase):
         self.assertEqual(4, arr1[1, 0])
 
     def test_create_zeros_array(self):
-        zeros1 = np.zeros(10)
-        self.assertEqual(1, zeros1.ndim)
-        self.assertEqual((10, ), zeros1.shape)
-        self.assertEqual(0, zeros1[0])
+        arr1 = np.zeros(10)
+        self.assertEqual(1, arr1.ndim)
+        self.assertEqual((10, ), arr1.shape)
+        self.assertEqual(0, arr1[0])
 
     def test_create_ones_array(self):
-        ones1 = np.ones((3, 6))
-        self.assertEqual(2, ones1.ndim)
-        self.assertEqual((3, 6), ones1.shape)
-        self.assertEqual(1, ones1[0, 1])
+        arr1 = np.ones((3, 6))
+        self.assertEqual(2, arr1.ndim)
+        self.assertEqual((3, 6), arr1.shape)
+        self.assertEqual(1, arr1[0, 1])
 
     def test_create_empty_array(self):
-        empty1 = np.empty((2, 3, 2))                #not initialized
-        self.assertEqual(3, empty1.ndim)
-        self.assertEqual((2, 3, 2), empty1.shape)
-        self.assertIsNotNone(empty1[0, 1, 0])
+        arr1 = np.empty((2, 3, 2))                        #not initialized
+        self.assertEqual(3, arr1.ndim)
+        self.assertEqual((2, 3, 2), arr1.shape)
+        self.assertIsNotNone(arr1[0, 1, 0])
+
+    def test_create_arrange_array(self):
+        arr1 = np.arange(15)                            #built in range function
+        self.assertEqual(1, arr1.ndim)
+        self.assertEqual((15, ), arr1.shape)
+        self.assertEqual(0, arr1[0])
+
+    def test_convert_dtype_array(self):
+        arr1 = np.array([1, 2, 3, 4, 5])
+        self.assertEqual('int64', arr1.dtype)
+        arr2 = arr1.astype(np.float64)
+        self.assertEqual('float64', arr2.dtype)
 
 
 if __name__ == '__main__':
