@@ -63,6 +63,13 @@ class TestNumpyArray(unittest.TestCase):
         self.assertEqual('float', arr2.dtype)
         self.assertEqual(1.25, arr2[0, ])
 
+        arr1 = np.array(['Baa', 'Raa', 'Waa'], dtype=np.string_)   #cast error, string to float64
+        self.assertRaises(ValueError, lambda: arr1.astype(np.float64))
+
+    def test_vectorization(self):
+        arr1 = np.array([[1., 2., 3.], [4., 5., 6.]])
+        self.assertEqual(4., arr1[1, 0])
+
 
 if __name__ == '__main__':
     unittest.main()
