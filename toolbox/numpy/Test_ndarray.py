@@ -73,6 +73,16 @@ class TestNumpyArray(unittest.TestCase):
         self.assertTrue((np.array([[0., 0., 0.], [0., 0., 0.]]) == (arr1 - arr1)).all())
         self.assertTrue((np.array([[1., 1.4142, 1.7321], [2., 2.2361, 2.4495]]) == (1 / arr1)).any())
         self.assertTrue((np.array([[1., 0., 0.], [2., 0., 0.]]) == (arr1 ** 0.5)).any())
+        arr2 = np.array([[0., 4., 1.], [7., 2., 12.]])
+        self.assertTrue((np.array([[False, True, False], [True, False, True]], dtype=bool) == (arr2 > arr1)).all())
+
+    def test_indexing(self):
+        arr1 = np.arange(10)                                        #one dimensional array
+        self.assertTrue(np.array(([0, 1, 2, 3, 4, 5, 6, 7, 8, 9]) == arr1).all())
+        self.assertEqual(5, arr1[5])
+        self.assertTrue(np.array(([5, 6, 7]) == arr1[5:8]).all())   #broadcase value 12 to entire selection
+        arr1[5:8] = 12
+        self.assertTrue(np.array(([0, 1, 2, 3, 4, 12, 12, 12, 8, 9]) == arr1).all())
 
 
 if __name__ == '__main__':
