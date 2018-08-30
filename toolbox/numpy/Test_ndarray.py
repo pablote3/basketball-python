@@ -3,46 +3,44 @@ import numpy as np
 
 
 class TestNumpyArray(unittest.TestCase):
-    def test_create_float_array(self):
-        arr1 = np.array([6, 7.5, 8, 0, 1])
+    def test_create_array(self):
+        arr1 = np.array([6, 7.5, 8, 0, 1])                          #one dimensional float array
         self.assertEqual("<class 'numpy.ndarray'>", str(type(arr1)))
-        self.assertEqual("float64", arr1.dtype)                     #data type of array
-        self.assertEqual(1, arr1.ndim)                              #number of dimensions
+        self.assertEqual("float64", arr1.dtype)                     #array data type
+        self.assertEqual(1, arr1.ndim)                              #array dimensions
         self.assertEqual((5,), arr1.shape)
         self.assertEqual(6., arr1[0])
 
-    def test_create_two_dimension_array(self):
-        arr1 = np.array([[1, 2, 3], [4, 5, 6]])
+        arr1 = np.array([[1, 2, 3], [4, 5, 6]])                     #two dimensional integer array
         self.assertEqual("<class 'numpy.ndarray'>", str(type(arr1)))
-        self.assertEqual("int64", arr1.dtype)                       #data type of array
-        self.assertEqual(2, arr1.ndim)                              #number of dimensions
+        self.assertEqual("int64", arr1.dtype)
+        self.assertEqual(2, arr1.ndim)
         self.assertEqual((2, 3), arr1.shape)
         self.assertEqual(1, arr1[0, 0])
         self.assertEqual(4, arr1[1, 0])
 
-    def test_create_zeros_array(self):
-        arr1 = np.zeros(10)
+        arr1 = np.zeros(10)                                         #one dimensional zeros array
         self.assertEqual(1, arr1.ndim)
         self.assertEqual((10, ), arr1.shape)
         self.assertEqual(0, arr1[0])
+        self.assertTrue((np.array([0, 0, 0, 0, 0, 0, 0, 0, 0, 0]) == arr1).all())
 
-    def test_create_ones_array(self):
-        arr1 = np.ones((3, 6))
+        arr1 = np.ones((3, 6))                                      #two dimensional ones array
         self.assertEqual(2, arr1.ndim)
         self.assertEqual((3, 6), arr1.shape)
         self.assertEqual(1, arr1[0, 1])
+        self.assertTrue((np.array([[1, 1, 1, 1, 1, 1], [1, 1, 1, 1, 1, 1], [1, 1, 1, 1, 1, 1]]) == arr1).all())
 
-    def test_create_empty_array(self):
-        arr1 = np.empty((2, 3, 2))                                  #not initialized
+        arr1 = np.empty((2, 3, 2))                                  #three dimensional uninitialized array
         self.assertEqual(3, arr1.ndim)
         self.assertEqual((2, 3, 2), arr1.shape)
         self.assertIsNotNone(arr1[0, 1, 0])
 
-    def test_create_arrange_array(self):
-        arr1 = np.arange(15)                                        #built in range function
+        arr1 = np.arange(15)                                        #one dimensional array using range function
         self.assertEqual(1, arr1.ndim)
         self.assertEqual((15, ), arr1.shape)
         self.assertEqual(0, arr1[0])
+        self.assertTrue((np.array([0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14]) == arr1).all())
 
     def test_convert_dtype_array(self):
         arr1 = np.array([1, 2, 3, 4, 5])                            #int64 to float64
@@ -80,9 +78,13 @@ class TestNumpyArray(unittest.TestCase):
         arr1 = np.arange(10)                                        #one dimensional array
         self.assertTrue(np.array(([0, 1, 2, 3, 4, 5, 6, 7, 8, 9]) == arr1).all())
         self.assertEqual(5, arr1[5])
-        self.assertTrue(np.array(([5, 6, 7]) == arr1[5:8]).all())   #broadcase value 12 to entire selection
-        arr1[5:8] = 12
-        self.assertTrue(np.array(([0, 1, 2, 3, 4, 12, 12, 12, 8, 9]) == arr1).all())
+        self.assertTrue(np.array(([5, 6, 7]) == arr1[5:8]).all())
+
+        arr_slice = arr1[5:8]
+        self.assertTrue(np.array(([5, 6, 7]) == arr_slice).all())
+        arr_slice[:] = 12                                           #broadcast value 12 to all array values
+        self.assertTrue(np.array(([12, 12, 12]) == arr_slice).all())
+        self.assertTrue(np.array(([0, 1, 2, 3, 4, 12, 12, 12, 8, 9]) == arr1).all())    #original array is impacted
 
 
 if __name__ == '__main__':
