@@ -68,7 +68,11 @@ class TestNumpyArray(unittest.TestCase):
 
     def test_vectorization(self):
         arr1 = np.array([[1., 2., 3.], [4., 5., 6.]])
-        self.assertEqual(4., arr1[1, 0])
+        self.assertTrue((np.array([[1., 4., 9.], [16., 25., 36.]]) == (arr1 * arr1)).all())
+        self.assertTrue((np.array([[0., 0., 0.], [0., 0., 0.]]) == (arr1 - arr1)).all())
+        self.assertTrue((np.array([[0., 0., 0.], [0., 0., 0.]]) == (arr1 - arr1)).all())
+        self.assertTrue((np.array([[1., 1.4142, 1.7321], [2., 2.2361, 2.4495]]) == (1 / arr1)).any())
+        self.assertTrue((np.array([[1., 0., 0.], [2., 0., 0.]]) == (arr1 ** 0.5)).any())
 
 
 if __name__ == '__main__':
