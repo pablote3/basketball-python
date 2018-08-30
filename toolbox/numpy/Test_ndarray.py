@@ -115,6 +115,16 @@ class TestNumpyArray(unittest.TestCase):
         arr1[:2, 1:] = 0                                            #assign to slice
         self.assertTrue(np.array(([1, 0, 0], [4, 0, 0], [7, 8, 9]) == arr1).all())
 
+    def test_boolean_indexing(self):
+        names1 = np.array(['Bob', 'Joe', 'Bob', 'Marty', 'Paul'])   #1d 1x5 array
+        data1 = np.array([[1, 2], [2, 3], [3, 4], [4, 5], [5, 6]])  #2d 2x5 array
+        bobs1 = names1 == 'Bob'
+        self.assertTrue(np.array(([True, False, True, False, False]) == bobs1).all())
+        self.assertTrue(np.array(([[1, 2], [3, 4]]) == data1[bobs1]).all())
+        self.assertTrue(np.array(([[1], [3]]) == (data1[bobs1, :1])).all())
+        self.assertTrue(np.array(([[2], [4]]) == (data1[bobs1, 1:])).all())
+        self.assertTrue(np.array(([2, 4]) == (data1[bobs1, 1])).all())
+
 
 if __name__ == '__main__':
     unittest.main()
