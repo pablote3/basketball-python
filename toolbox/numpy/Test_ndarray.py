@@ -146,6 +146,11 @@ class TestNumpyArray(unittest.TestCase):
         self.assertTrue(np.array(([[0, 1, 2, 3], [4, 5, 6, 7], [8, 9, 10, 11], [12, 13, 14, 15]]) == arr1).all())
         self.assertTrue(np.array(([2, 7, 12]) == arr1[[0, 1, 3], [2, 3, 0]]).all())        #tuple built from each array
 
+    def test_transposing_arrays(self):
+        arr1 = np.arange(15).reshape((3, 5))
+        self.assertTrue(np.array(([[0, 1, 2, 3, 4], [5, 6, 7, 8, 9], [10, 11, 12, 13, 14]]) == arr1).all())
+        self.assertTrue(np.array(([[0, 5, 10], [1, 6, 11], [2, 7, 12], [3, 8, 13], [4, 9, 14]]) == arr1.T).all())
+
 
 if __name__ == '__main__':
     unittest.main()
