@@ -118,12 +118,21 @@ class TestNumpyArray(unittest.TestCase):
     def test_boolean_indexing(self):
         names1 = np.array(['Bob', 'Joe', 'Bob', 'Marty', 'Paul'])   #1d 1x5 array
         data1 = np.array([[1, 2], [2, 3], [3, 4], [4, 5], [5, 6]])  #2d 2x5 array
-        bobs1 = names1 == 'Bob'
-        self.assertTrue(np.array(([True, False, True, False, False]) == bobs1).all())
-        self.assertTrue(np.array(([[1, 2], [3, 4]]) == data1[bobs1]).all())
-        self.assertTrue(np.array(([[1], [3]]) == (data1[bobs1, :1])).all())
-        self.assertTrue(np.array(([[2], [4]]) == (data1[bobs1, 1:])).all())
-        self.assertTrue(np.array(([2, 4]) == (data1[bobs1, 1])).all())
+        self.assertTrue(np.array(([True, False, True, False, False]) == (names1 == 'Bob')).all())
+        self.assertTrue(np.array(([[1, 2], [3, 4]]) == data1[names1 == 'Bob']).all())
+        self.assertTrue(np.array(([[1], [3]]) == (data1[names1 == 'Bob', :1])).all())
+        self.assertTrue(np.array(([[2], [4]]) == (data1[names1 == 'Bob', 1:])).all())
+        self.assertTrue(np.array(([2, 4]) == (data1[names1 == 'Bob', 1])).all())
+
+        self.assertTrue(np.array(([False, True, False, True, True]) == (names1 != 'Bob')).all())    #negate with !=
+        self.assertTrue(np.array(([False, True, False, True, True]) == ~(names1 == 'Bob')).all())   #netate with ~
+
+        cond = (names1 == 'Bob') | (names1 == 'Marty')              #combine boolean conditions
+        self.assertTrue(np.array(([True, False, True, True, False]) == cond).all())
+
+        data1 = np.array([[1.1, -2.5], [-2, 3], [.3, -.4], [4.1, -5.2], [-5, -6]])
+        data1[data1 < 0] = 0                                        #setting values with boolean array
+        self.assertTrue(np.array(([[1.1, 0.], [0., 3], [.3, 0.], [4.1, 0.], [0., 0.]]) == data1).all())
 
 
 if __name__ == '__main__':
