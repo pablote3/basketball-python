@@ -134,6 +134,18 @@ class TestNumpyArray(unittest.TestCase):
         data1[data1 < 0] = 0                                        #setting values with boolean array
         self.assertTrue(np.array(([[1.1, 0.], [0., 3], [.3, 0.], [4.1, 0.], [0., 0.]]) == data1).all())
 
+    def test_fancy_indexing(self):
+        arr1 = np.empty((4, 4))
+        for i in range(4):
+            arr1[i] = i
+        self.assertTrue(np.array(([[0, 0, 0, 0], [1, 1, 1, 1], [2, 2, 2, 2], [3, 3, 3, 3]]) == arr1).all())
+        self.assertTrue(np.array(([[3, 3, 3, 3], [0, 0, 0, 0]]) == arr1[[3, 0]]).all())    #select rows 3 and 0
+        self.assertTrue(np.array(([[1, 1, 1, 1], [3, 3, 3, 3]]) == arr1[[-3, -1]]).all())  #select rows 3 and 1 from end
+
+        arr1 = np.arange(16).reshape((4, 4))
+        self.assertTrue(np.array(([[0, 1, 2, 3], [4, 5, 6, 7], [8, 9, 10, 11], [12, 13, 14, 15]]) == arr1).all())
+        self.assertTrue(np.array(([2, 7, 12]) == arr1[[0, 1, 3], [2, 3, 0]]).all())        #tuple built from each array
+
 
 if __name__ == '__main__':
     unittest.main()
