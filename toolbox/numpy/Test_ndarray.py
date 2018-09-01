@@ -154,8 +154,8 @@ class TestNumpyArray(unittest.TestCase):
     def test_element_wise_array_functions(self):
         arr1 = np.arange(5)
         self.assertTrue(np.array(([0, 1, 2, 3, 4]) == arr1).all())
-        self.assertTrue(np.array(([0.0, 1.0, 1.41, 1.73, 2.0]) == np.round(np.sqrt(arr1), 2).all()))
-#        self.assertTrue(np.array(([0.0, 1.0, 1.4142135623730951, 1.7320508075688772, 2.0]) == np.exp(arr1)).all())
+        self.assertTrue(np.array(([0.0, 1.0, 1.41, 1.73, 2.0]) == np.round(np.sqrt(arr1), 2)).all())
+        self.assertTrue(np.array(([1.0, 2.72, 7.39, 20.09, 54.6]) == np.round(np.exp(arr1), 2)).all())
 
 
 if __name__ == '__main__':
