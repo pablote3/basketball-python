@@ -154,8 +154,26 @@ class TestNumpyArray(unittest.TestCase):
     def test_element_wise_array_functions(self):
         arr1 = np.arange(5)
         self.assertTrue(np.array(([0, 1, 2, 3, 4]) == arr1).all())
-        self.assertTrue(np.array(([0.0, 1.0, 1.41, 1.73, 2.0]) == np.round(np.sqrt(arr1), 2)).all())
+        self.assertTrue(np.array(([0.0, 1.0, 1.41, 1.73, 2.0]) == np.round(np.sqrt(arr1), 2)).all())    #unary ufuncs
         self.assertTrue(np.array(([1.0, 2.72, 7.39, 20.09, 54.6]) == np.round(np.exp(arr1), 2)).all())
+
+        arr1 = np.array(([0, 1, 2, 3, 4]))
+        arr2 = np.array(([4, 3, 2, 1, 0]))
+        self.assertTrue(np.array(([4, 3, 2, 3, 4]) == np.maximum(arr1, arr2)).all())                    #binary ufuncs
+        self.assertTrue(np.array(([4, 4, 4, 4, 4]) == np.add(arr1, arr2)).all())
+
+    def test_conditional_logic_array_operators(self):
+        xarr = np.array([1.1, 1.2, 1.3, 1.4, 1.5])
+        yarr = np.array([2.1, 2.2, 2.3, 2.4, 2.5])
+        cond = np.array([True, False, True, True, False])
+        self.assertTrue(np.array(([1.1, 2.2, 1.3, 1.4, 2.5]) == np.where(cond, xarr, yarr)).all())
+
+        arr1 = np.array(([10, -8, -4, 6], [9, 5, 8, -4], [-6, 6, -9, -7], [3, -1, -7, -8]))
+        result = np.array(([2, -2, -2, 2], [2, 2, 2, -2], [-2, 2, -2, -2], [2, -2, -2, -2]))
+        self.assertTrue((result == np.where(arr1 > 0, 2, -2)).all())                       #if > 0 then 2 else -2
+
+        result = np.array(([2, -8, -4, 2], [2, 2, 2, -4], [-6, 2, -9, -7], [2, -1, -7, -8]))
+        self.assertTrue((result == np.where(arr1 > 0, 2, arr1)).all())                     #set only > 0 to 2
 
 
 if __name__ == '__main__':
