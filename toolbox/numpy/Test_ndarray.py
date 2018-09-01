@@ -175,6 +175,24 @@ class TestNumpyArray(unittest.TestCase):
         result = np.array(([2, -8, -4, 2], [2, 2, 2, -4], [-6, 2, -9, -7], [2, -1, -7, -8]))
         self.assertTrue((result == np.where(arr1 > 0, 2, arr1)).all())                     #set only > 0 to 2
 
+    def test_statistical_methods(self):
+        arr1 = np.array(([10, -8, -4, 6], [9, 5, 8, -4], [-6, 6, -9, -7], [3, -1, -7, -8]))
+        self.assertEqual(-0.4375, arr1.mean())
+        self.assertEqual(-0.4375, np.mean(arr1))
+        self.assertEqual(-7, arr1.sum())
+        self.assertTrue((np.array([1.0, 4.5, -4.0, -3.25]) == arr1.mean(axis=1)).all())    #take mean of each row
+        self.assertTrue((np.array([4.0, 0.5, -3.0, -3.25]) == arr1.mean(axis=0)).all())    #take mean of each column
+
+        result = np.array(([10, 2, -2, 4], [9, 14, 22, 18], [-6, 0, -9, -16], [3, 2, -5, -13]))
+        self.assertTrue((result == arr1.cumsum(axis=1)).all())                             #cumulative sum by row
+        result = np.array(([10, -8, -4, 6], [19, -3, 4, 2], [13, 3, -5, -5], [16, 2, -12, -13]))
+        self.assertTrue((result == arr1.cumsum(axis=0)).all())                             #cumulative sum by column
+
+        result = np.array(([10, -80, 320, 1920], [9, 45, 360, -1440], [-6, -36, 324, -2268], [3, -3, 21, -168]))
+        self.assertTrue((result == arr1.cumprod(axis=1)).all())                            #cumulative product by row
+        result = np.array(([10, -8, -4, 6], [90, -40, -32, -24], [-540, -240, 288, 168], [-1620, 240, -2016, -1344]))
+        self.assertTrue((result == arr1.cumprod(axis=0)).all())                            #cumulative product by column
+
 
 if __name__ == '__main__':
     unittest.main()
