@@ -180,6 +180,7 @@ class TestNumpyArray(unittest.TestCase):
         self.assertEqual(-0.4375, arr1.mean())
         self.assertEqual(-0.4375, np.mean(arr1))
         self.assertEqual(-7, arr1.sum())
+        self.assertEqual(7, (arr1 > 0).sum())                                              #number of positive values
         self.assertTrue((np.array([1.0, 4.5, -4.0, -3.25]) == arr1.mean(axis=1)).all())    #take mean of each row
         self.assertTrue((np.array([4.0, 0.5, -3.0, -3.25]) == arr1.mean(axis=0)).all())    #take mean of each column
 
@@ -197,6 +198,11 @@ class TestNumpyArray(unittest.TestCase):
         self.assertTrue((result == arr1.cumprod(axis=1)).all())                            #cumulative product by row
         result = np.array(([10, -8, -4, 6], [90, -40, -32, -24], [-540, -240, 288, 168], [-1620, 240, -2016, -1344]))
         self.assertTrue((result == arr1.cumprod(axis=0)).all())                            #cumulative product by column
+
+    def test_boolean_arrays(self):
+        arr1 = np.array([False, False, True, False])
+        self.assertEqual(True, arr1.any())                                                 #any true
+        self.assertEqual(False, arr1.all())                                                #all true
 
 
 if __name__ == '__main__':
