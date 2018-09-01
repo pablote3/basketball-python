@@ -183,6 +183,11 @@ class TestNumpyArray(unittest.TestCase):
         self.assertTrue((np.array([1.0, 4.5, -4.0, -3.25]) == arr1.mean(axis=1)).all())    #take mean of each row
         self.assertTrue((np.array([4.0, 0.5, -3.0, -3.25]) == arr1.mean(axis=0)).all())    #take mean of each column
 
+        self.assertEqual(6.727, np.round(arr1.std(), 3))                                   #standard deviation
+        self.assertEqual(45.246, np.round(arr1.var(), 3))                                  #variance
+        self.assertEqual(10, arr1.max(), 3)
+        self.assertEqual(-9, arr1.min(), 3)
+
         result = np.array(([10, 2, -2, 4], [9, 14, 22, 18], [-6, 0, -9, -16], [3, 2, -5, -13]))
         self.assertTrue((result == arr1.cumsum(axis=1)).all())                             #cumulative sum by row
         result = np.array(([10, -8, -4, 6], [19, -3, 4, 2], [13, 3, -5, -5], [16, 2, -12, -13]))
