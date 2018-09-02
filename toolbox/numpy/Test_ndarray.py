@@ -204,6 +204,36 @@ class TestNumpyArray(unittest.TestCase):
         self.assertEqual(True, arr1.any())                                                 #any true
         self.assertEqual(False, arr1.all())                                                #all true
 
+    def test_sorting_arrays(self):
+        arr1 = np.array(([10, -8, -4, 6], [9, 5, 8, -4], [-6, 6, -9, -7], [3, -1, -7, -8]))
+        arr1.sort()
+        self.assertTrue((np.array([[-8, -4, 6, 10], [-4, 5, 8, 9], [-9, -7, -6, 6], [-8, -7, -1, 3]]) == arr1).all())
+
+        result = np.sort(arr1)                                                             #creates sorted copy of array
+        self.assertTrue((np.array([[-8, -4, 6, 10], [-4, 5, 8, 9], [-9, -7, -6, 6], [-8, -7, -1, 3]]) == result).all())
+
+        arr1 = np.array(([10, -8, -4, 6, 9, 5, 8, -4, -6, 6, -9, -7, 3, -1, -7, -8]))
+        arr1.sort()
+        self.assertTrue((np.array([-9, -8, -8, -7, -7, -6, -4, -4, -1,  3,  5,  6,  6,  8,  9, 10]) == arr1).all())
+
+        self.assertEqual(-8, arr1[int(0.1 * len(arr1))])                                   #quick and dirty quantiles
+
+    def test_set_operation_arrays(self):
+        arr1 = np.array(['Bob', 'Joe', 'Bob', 'Marty', 'Paul', 'Paul'])
+        self.assertTrue((np.array(['Bob', 'Joe', 'Marty', 'Paul']) == np.unique(arr1)).all())
+
+        arr1 = np.array([3, 3, 3, 2, 2, 1, 1, 4])
+        self.assertTrue((np.array([1, 2, 3, 4]) == np.unique(arr1)).all())
+
+        result = np.array([False, False, False, True, True, True, True, False])
+        self.assertTrue((result == np.in1d(arr1, [2, 1, 5])).all())
+
+    def test_linear_algebra(self):
+        arr1 = np.array([[1., 2., 3.], [4., 5., 6.]])
+        arr2 = np.array([[6., 23.], [-1, 7], [8, 9]])
+        self.assertTrue((np.array([[28., 64.], [67., 181.]]) == arr1.dot(arr2)).all())      #matrix multiplication
+        self.assertTrue((np.array([[28., 64.], [67., 181.]]) == np.dot(arr1, arr2)).all())  #equivalent
+
 
 if __name__ == '__main__':
     unittest.main()
