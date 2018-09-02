@@ -234,6 +234,10 @@ class TestNumpyArray(unittest.TestCase):
         self.assertTrue((np.array([[28., 64.], [67., 181.]]) == arr1.dot(arr2)).all())      #matrix multiplication
         self.assertTrue((np.array([[28., 64.], [67., 181.]]) == np.dot(arr1, arr2)).all())  #equivalent
 
+    def test_random_number_generator(self):
+        rng = np.random.RandomState(1234)
+        self.assertTrue((np.array([0.47, -1.19, 1.43, -0.31, -0.72]) == np.round(rng.randn(5), 2)).all())
+
 
 if __name__ == '__main__':
     unittest.main()
