@@ -48,6 +48,10 @@ class Operators(unittest.TestCase):
         self.assertTrue(self.int1 >= self.int2)
         self.assertTrue(self.int1 >= self.int1)
         self.assertTrue(self.int2 >= self.flt2)
+        self.assertTrue(3, max(1, 2, 3))
+        self.assertTrue(1, min(1, 2, 3))
+        self.assertTrue(3, abs(3))
+        self.assertTrue(3, abs(-3))
 
     def test_logical(self):
         self.assertTrue(self.boolT and self.boolT)
