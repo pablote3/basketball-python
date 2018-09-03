@@ -76,6 +76,7 @@ class DataTypePrimitives(unittest.TestCase):
     def test_stringConcatenate(self):
         self.assertEqual('doubleQuote blah', self.str1 + ' ' + self.str2)
         self.assertRaises(TypeError, lambda: self.str1 + self.int1)
+        self.assertEqual("Spam Spam Spam Spam ", "Spam " * 4)
 
     def test_stringAsList(self):
         list1 = list("blue")         #list constructor
