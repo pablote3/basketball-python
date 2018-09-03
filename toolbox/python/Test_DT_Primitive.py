@@ -72,8 +72,7 @@ class DataTypePrimitives(unittest.TestCase):
         self.assertEqual(3, self.strMultiLine.count('\n'))
         self.assertEqual(11, len(self.str1))
 
-    # noinspection PyTypeChecker
-    def test_stringConcatenate(self):
+    def test_stringOperatorOverloading(self):
         self.assertEqual('doubleQuote blah', self.str1 + ' ' + self.str2)
         self.assertRaises(TypeError, lambda: self.str1 + self.int1)
         self.assertEqual("Spam Spam Spam Spam ", "Spam " * 4)
