@@ -2,7 +2,7 @@ import unittest
 import pandas as pd
 
 
-class TestNumpyArray(unittest.TestCase):
+class TestPandasSeries(unittest.TestCase):
     def test_create_series(self):
         arr1 = pd.Series([4, 7, -5, 3])                                 #default index
         self.assertTrue(([4, 7, -5, 3] == arr1.values).all())
