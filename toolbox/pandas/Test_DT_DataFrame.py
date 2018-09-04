@@ -10,9 +10,14 @@ class TestPandasDataFrame(unittest.TestCase):
                  }
         frame = pd.DataFrame(dict1)
 
-        frame.head()                                            #select first 5 rows
-        frame.tail()                                            #select last 5 rows
-        pd.DataFrame(frame, columns=['year', 'state', 'pop'])    #change order of columns
+        frame.head()                                                            #select first 5 rows
+        frame.tail()                                                            #select last 5 rows
+
+        pd.DataFrame(dict1, columns=['year', 'state', 'pop'])                   #change order of columns
+        frame = pd.DataFrame(dict1, columns=['year', 'state', 'pop', 'debt'],   #adding column with missing values
+                             index=['one', 'two', 'three', 'four', 'five', 'six'])
+        self.assertTrue((pd.isnull(frame['debt'])).all())                       #retrieve column as series as dict
+        self.assertTrue((pd.notnull(frame.year)).all())                         #retrieve column as series by attribute
 
 
 if __name__ == '__main__':
