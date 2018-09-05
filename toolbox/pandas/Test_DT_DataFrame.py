@@ -29,6 +29,11 @@ class TestPandasDataFrame(unittest.TestCase):
         result = list([2002, 'Ohio', 3.6, float('nan')])
         self.assertTrue((result == frame.loc['three'].values).any())            #some casting needed
 
+        debt = pd.Series([-1.2, -1.5, -1.7], index=['two', 'four', 'five'])
+        frame['debt'] = debt                                                    #assign list to debt column
+        result = list([2001, 'Ohio', 1.7, -1.2])
+        self.assertTrue((result == frame.loc['two'].values).any())              #some casting needed
+
 
 if __name__ == '__main__':
     unittest.main()
