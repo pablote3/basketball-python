@@ -33,15 +33,15 @@ class TestPandasSeries(unittest.TestCase):
         self.assertTrue(pd.isnull(match['California']))                 #is null check
 
     def test_reindex(self):
-        frame = pd.Series([4.5, 7.2, -5.3, 3.6], index=['d', 'b', 'a', 'c'])
-        self.assertEqual(4, frame.index.size)
-        frame = frame.reindex(['a', 'b', 'c', 'd', 'e'])
-        self.assertEqual(5, frame.index.size)                                   #rearrange new index, add missing values
+        ser1 = pd.Series([4.5, 7.2, -5.3, 3.6], index=['d', 'b', 'a', 'c'])
+        self.assertEqual(4, ser1.index.size)
+        ser1 = ser1.reindex(['a', 'b', 'c', 'd', 'e'])
+        self.assertEqual(5, ser1.index.size)                                   #rearrange new index, add missing values
 
-        frame = pd.Series(['blue', 'purple', 'yellow'], index=[0, 2, 4])
-        frame = frame.reindex(range(6), method='ffill')                         #reindex with forward-fill values
+        ser1 = pd.Series(['blue', 'purple', 'yellow'], index=[0, 2, 4])
+        ser1 = ser1.reindex(range(6), method='ffill')                         #reindex with forward-fill values
         arr1 = np.array(['blue', 'blue', 'purple', 'purple', 'yellow', 'yellow'])
-        self.assertTrue((arr1 == frame.values).all())
+        self.assertTrue((arr1 == ser1.values).all())
 
 
 if __name__ == '__main__':
