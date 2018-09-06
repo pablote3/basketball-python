@@ -61,6 +61,16 @@ class TestPandasDataFrame(unittest.TestCase):
         self.assertEqual(2, frame.columns.size)
         self.assertEqual(2, frame.index.size)
 
+    def test_reindex(self):
+        frame = pd.DataFrame(np.arange(9).reshape((3, 3)),
+                             index=['a', 'c', 'd'],
+                             columns=['Ohio', 'Texas', 'California'])
+        self.assertEqual(3, frame.index.size)
+        self.assertEqual(3, frame.columns.size)
+        frame = frame.reindex(['a', 'b', 'c', 'd'])
+        self.assertEqual(4, frame.index.size)                                   #rearrange new index, add missing row
+        self.assertEqual(3, frame.columns.size)
+
 
 if __name__ == '__main__':
     unittest.main()
