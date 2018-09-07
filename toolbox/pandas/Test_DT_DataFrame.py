@@ -65,11 +65,18 @@ class TestPandasDataFrame(unittest.TestCase):
         frame = pd.DataFrame(np.arange(9).reshape((3, 3)),
                              index=['a', 'c', 'd'],
                              columns=['Ohio', 'Texas', 'California'])
-        self.assertEqual(3, frame.index.size)
-        self.assertEqual(3, frame.columns.size)
-        frame = frame.reindex(['a', 'b', 'c', 'd'])
-        self.assertEqual(4, frame.index.size)                                   #rearrange new index, add missing row
-        self.assertEqual(3, frame.columns.size)
+        self.assertTrue((pd.Index(['a', 'c', 'd']) == frame.index).all())
+        self.assertTrue((pd.Index(['Ohio', 'Texas', 'California']) == frame.columns).all())
+
+        frame = frame.reindex(['a', 'b', 'c', 'd'])                             #rearrange new index and add new row
+        self.assertTrue((pd.Index(['a', 'b', 'c', 'd']) == frame.index).all())
+        self.assertTrue((pd.Index(['Ohio', 'Texas', 'California']) == frame.columns).all())
+        result = pd.Series([0., float('nan'), 3., 6.], index=['a', 'b', 'c', 'd'])
+        self.assertTrue((result == frame['Ohio']).any())
+        result = pd.Series([1., float('nan'), 4., 7.], index=['a', 'b', 'c', 'd'])
+        self.assertTrue((result == frame['Texas']).any())
+        result = pd.Series([2., float('nan'), 5., 8.], index=['a', 'b', 'c', 'd'])
+        self.assertTrue((result == frame['California']).any())
 
 
 if __name__ == '__main__':
