@@ -30,7 +30,7 @@ class TestPandasDataFrame(unittest.TestCase):
 
         frame['eastern'] = frame.state == 'Ohio'                                #add column of booleans
         self.assertEqual(5, frame.columns.size)
-        arr1 = np.array(['year', 'state', 'pop', 'debt', 'eastern'])
+        arr1 = list(['year', 'state', 'pop', 'debt', 'eastern'])
         self.assertTrue((arr1 == frame.columns.values).any())
 
         frame = pd.DataFrame(np.arange(16).reshape((4, 4)),                     #create with values using arrange
@@ -45,9 +45,21 @@ class TestPandasDataFrame(unittest.TestCase):
         frame = pd.DataFrame(dict1)                                             #outer key = columns, inner keys = rows
         self.assertEqual(2, frame.columns.size)
         self.assertEqual(3, frame.index.size)
-
         self.assertEqual(3, frame.T.columns.size)                               #transpose columns and rows
         self.assertEqual(2, frame.T.index.size)
+
+    def test_selection(self):
+        frame = pd.DataFrame(np.arange(16).reshape((4, 4)),                     #create with values using arrange
+                             index=['Ohio', 'Colorado', 'Utah', 'New York'],
+                             columns=['one', 'two', 'three', 'four'])
+        result = pd.Series([1, 5, 9, 13], index=['Ohio', 'Colorado', 'Utah', 'New York'])
+        self.assertTrue((result == frame['two']).all())                         #select by column
+
+        result = pd.DataFrame([[2, 0], [6, 4], [10, 8], [14, 12]],
+                              index=['Ohio', 'Colorado', 'Utah', 'New York'],
+                              columns=['three', 'one'])
+        self.assertTrue(((result == frame[['three', 'one']]).all()).all())
+
 
     def test_functions(self):
         frame = pd.DataFrame(np.arange(25).reshape((5, 5)),
