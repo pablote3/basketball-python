@@ -58,8 +58,17 @@ class TestPandasDataFrame(unittest.TestCase):
         result = pd.DataFrame([[2, 0], [6, 4], [10, 8], [14, 12]],
                               index=['Ohio', 'Colorado', 'Utah', 'New York'],
                               columns=['three', 'one'])
-        self.assertTrue(((result == frame[['three', 'one']]).all()).all())
+        self.assertTrue(((result == frame[['three', 'one']]).all()).all())      #select multiple columns
 
+        result = pd.DataFrame([[0, 1, 2, 3], [4, 5, 6, 7]],
+                              index=['Ohio', 'Colorado'],
+                              columns=['one', 'two', 'three', 'four'])
+        self.assertTrue(((result == frame[:2]).all()).all())                    #select multiple rows
+
+        result = pd.DataFrame([[4, 5, 6, 7], [8, 9, 10, 11], [12, 13, 14, 15]],
+                              index=['Colorado', 'Utah', 'New York'],
+                              columns=['one', 'two', 'three', 'four'])
+        self.assertTrue(((result == frame[frame['three'] > 5]).all()).all())    #select multiple rows via condition
 
     def test_functions(self):
         frame = pd.DataFrame(np.arange(25).reshape((5, 5)),
