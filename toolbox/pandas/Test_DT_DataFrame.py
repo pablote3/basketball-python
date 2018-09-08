@@ -4,7 +4,7 @@ import numpy as np
 
 
 class TestPandasDataFrame(unittest.TestCase):
-    def test_create_using_dict(self):
+    def test_create(self):
         dict1 = {'state': ['Ohio', 'Ohio', 'Ohio', 'Nevada', 'Nevada', 'Nevada'],
                  'year': [2000, 2001, 2002, 2001, 2002, 2003],
                  'pop': [1.5, 1.7, 3.6, 2.4, 2.9, 3.2]
@@ -69,6 +69,28 @@ class TestPandasDataFrame(unittest.TestCase):
                               index=['Colorado', 'Utah', 'New York'],
                               columns=['one', 'two', 'three', 'four'])
         self.assertTrue(((result == frame[frame['three'] > 5]).all()).all())    #select multiple rows via condition
+
+        result = pd.Series([5, 6], index=['two', 'three'])
+        self.assertTrue((result == frame.loc['Colorado', ['two', 'three']]).all())  #select by row and column using loc
+
+        result = pd.Series([1, 5, 9], index=['Ohio', 'Colorado', 'Utah'])
+        self.assertTrue((result == frame.loc[:'Utah', 'two']).all())           #select by row and column using iloc
+
+        result = pd.Series([8, 9, 10, 11], index=['one', 'two', 'three', 'four'])
+        self.assertTrue((result == frame.iloc[2]).all())                        #select by row using iloc
+
+        result = pd.Series([11, 8, 9], index=['four', 'one', 'two'])
+        self.assertTrue((result == frame.iloc[2, [3, 0, 1]]).all())             #select by row and column using iloc
+
+        result = pd.DataFrame([[7, 4, 5], [11, 8, 9]],
+                              columns=['four', 'one', 'two'],
+                              index=['Colorado', 'Utah'])
+        self.assertTrue(((result == frame.iloc[[1, 2], [3, 0, 1]]).all()).all())    #select by row and column using iloc
+
+        result = pd.DataFrame([[4, 5, 6], [8, 9, 10], [12, 13, 14]],
+                              columns=['one', 'two', 'three'],
+                              index=['Colorado', 'Utah', 'New York'])
+        self.assertTrue(((result == frame.iloc[:, :3][frame.three > 5]).all()).all())  #select row, column using where
 
     def test_functions(self):
         frame = pd.DataFrame(np.arange(25).reshape((5, 5)),
