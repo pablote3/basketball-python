@@ -28,22 +28,25 @@ class TestPandasSeries(unittest.TestCase):
 
     def test_selection(self):
         arr1 = pd.Series([4, 7, -5, 3], index=['d', 'b', 'a', 'c'])
-        self.assertEqual(7, arr1['b'])                                  #select by index
-        self.assertEqual(7, arr1[1])                                    #select by i
-        self.assertTrue(([7, -5, 4] == arr1[['b', 'a', 'd']]).all())    #slice by indexes
-        self.assertTrue(([7, -5] == arr1[1:3]).all())                   #slice by i
-        self.assertTrue(([7, 3] == arr1[[1, 3]]).all())                 #slice by i
-        self.assertTrue(([4, 7, 3] == arr1[arr1 > 0]).all())            #values greater than 0
+        self.assertEqual(7, arr1['b'])                                  #select by label
+        self.assertEqual(7, arr1[1])                                    #select by index
+        self.assertTrue(([7, -5, 4] == arr1[['b', 'a', 'd']]).all())    #slice by labels
+        self.assertTrue(([7, -5] == arr1[1:3]).all())                   #slice by indexes
+        self.assertTrue(([7, 3] == arr1[[1, 3]]).all())                 #slice by indexes
+        self.assertTrue(([4, 7, 3] == arr1[arr1 > 0]).all())            #indexes greater than 0
 
     def test_functions(self):
         arr1 = pd.Series([4, 7, -5, 3], index=['d', 'b', 'a', 'c'])
         self.assertTrue(([8, 14, -10, 6] == arr1 * 2).all())            #values multiplied by 2
         self.assertEqual(True, 'b' in arr1)                             #is 'b' in series
+        arr1[1:3] = 5                                                   #setting slice results
+        self.assertTrue(([4, 5, 5, 3] == arr1).all())
 
-        arr1 = pd.Series({'Ohio': 35000, 'Texas': 71000, 'Oregon': 16000, 'Utah': 5000})
+        dict1 = {'Ohio': 35000, 'Texas': 71000, 'Oregon': 16000, 'Utah': 5000}
+        arr1 = pd.Series(dict1)
         arr1 = arr1.drop('Oregon')                                      #drop row
         self.assertTrue((pd.Index(['Ohio', 'Texas', 'Utah']) == arr1.index).all())
-        arr1 = arr1.drop(['Ohio', 'Utah'])                              #drop rows
+        arr1.drop(['Ohio', 'Utah'], inplace=True)                       #drop rows inplace
         self.assertTrue((pd.Index(['Texas']) == arr1.index).all())
 
     def test_reindex(self):
