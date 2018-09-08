@@ -5,12 +5,12 @@ import numpy as np
 
 class TestPandasSeries(unittest.TestCase):
     def test_create(self):
-        arr1 = pd.Series([4, 7, -5, 3])                                 #default index
+        arr1 = pd.Series([4, 7, -5, 3])                                 #create with default index
         self.assertTrue(([4, 7, -5, 3] == arr1.values).all())
         self.assertTrue((pd.Index([0, 1, 2, 3] == arr1.index)).all())
         self.assertTrue((pd.RangeIndex(start=0, stop=4, step=1) == arr1.index).all())
 
-        arr1 = pd.Series([4, 7, -5, 3], index=['d', 'b', 'a', 'c'])     #index with label
+        arr1 = pd.Series([4, 7, -5, 3], index=['d', 'b', 'a', 'c'])     #create with labeled index
         self.assertTrue((pd.Index(['d', 'b', 'a', 'c'] == arr1.index)).all())
         self.assertTrue(([3, -5, 4] == arr1[['c', 'a', 'd']]).all())
 
