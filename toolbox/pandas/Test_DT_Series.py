@@ -26,11 +26,18 @@ class TestPandasSeries(unittest.TestCase):
         self.assertEqual(4, arr1.size)
         self.assertTrue((pd.Index(['Ohio', 'Oregon', 'Texas', 'Utah']) == arr1.index).all())
         self.assertEqual(71000, arr1['Texas'])
-        match = pd.Series(arr1, index=['California', 'Ohio', 'Oregon', 'Texas'])
-        match.name = 'population'
-        match.index.name = 'state'
-        self.assertTrue((pd.Index(['California', 'Ohio', 'Oregon', 'Texas']) == match.index).all())
-        self.assertTrue(pd.isnull(match['California']))                 #is null check
+
+        arr1 = pd.Series(arr1, index=['California', 'Ohio', 'Oregon', 'Texas'])
+        arr1.name = 'population'
+        arr1.index.name = 'state'
+        self.assertTrue((pd.Index(['California', 'Ohio', 'Oregon', 'Texas']) == arr1.index).all())
+        self.assertTrue(pd.isnull(arr1['California']))                  #is null check
+
+        arr1 = arr1.drop('Oregon')                                      #drop row
+        self.assertTrue((pd.Index(['California', 'Ohio', 'Texas']) == arr1.index).all())
+        arr1 = arr1.drop(['California', 'Ohio'])                        #drop rows
+        self.assertTrue((pd.Index(['Texas']) == arr1.index).all())
+
 
     def test_reindex(self):
         ser1 = pd.Series([4.5, 7.2, -5.3, 3.6], index=['d', 'b', 'a', 'c'])
