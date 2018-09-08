@@ -38,7 +38,6 @@ class TestPandasSeries(unittest.TestCase):
         arr1 = arr1.drop(['California', 'Ohio'])                        #drop rows
         self.assertTrue((pd.Index(['Texas']) == arr1.index).all())
 
-
     def test_reindex(self):
         ser1 = pd.Series([4.5, 7.2, -5.3, 3.6], index=['d', 'b', 'a', 'c'])
         self.assertEqual(4, ser1.index.size)
