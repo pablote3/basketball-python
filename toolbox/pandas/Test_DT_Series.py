@@ -67,6 +67,13 @@ class TestPandasSeries(unittest.TestCase):
         arr1 = np.array(['blue', 'blue', 'purple', 'purple', 'yellow', 'yellow'])
         self.assertTrue((arr1 == ser1.values).all())
 
+    def test_join(self):
+        arr1 = pd.Series([7.3, -2.5, 3.4, 1.5], index=['a', 'c', 'd', 'e'])
+        arr2 = pd.Series([-2.1, 3.6, -1.5, 4, 3.1], index=['a', 'c', 'e', 'f', 'g'])
+        result = pd.Series([5.2, 1.1, float('nan'), 0.0, float('nan'), float('nan')],
+                           index=['a', 'c', 'd', 'e', 'f', 'g'])
+        self.assertTrue((result == arr1 + arr2).any())                  #inner join
+
 
 if __name__ == '__main__':
     unittest.main()
