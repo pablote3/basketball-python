@@ -136,6 +136,21 @@ class TestPandasDataFrame(unittest.TestCase):
         result = pd.Series([1.0, float('nan'), 4.0, 7.0], index=['a', 'b', 'c', 'd'])
         self.assertTrue((result == frame['Texas']).any())
 
+    def test_join(self):
+        frame1 = pd.DataFrame(np.arange(9.).reshape((3, 3)),
+                              index=['Ohio', 'Texas', 'Colorado'],
+                              columns=list('bcd'))
+        frame2 = pd.DataFrame(np.arange(12.).reshape((4, 3)),
+                              index=['Utah', 'Ohio', 'Texas', 'Oregon'],
+                              columns=list('bde'))
+        frame = frame1 + frame2                                                 #inner join
+        self.assertTrue((pd.Index(['Colorado', 'Ohio', 'Oregon', 'Texas', 'Utah']) == frame.index).all())
+        self.assertTrue((pd.Index(['b', 'c', 'd', 'e']) == frame.columns).all())
+        result = pd.Series([3.0, float('nan'), 6.0, float('nan')], index=['b', 'c', 'd', 'e'])
+        self.assertTrue(((result == frame[1:2]).any()).any())
+        result = pd.Series([9.0, float('nan'), 12.0, float('nan')], index=['b', 'c', 'd', 'e'])
+        self.assertTrue(((result == frame[3:4]).any()).any())
+
 
 if __name__ == '__main__':
     unittest.main()
