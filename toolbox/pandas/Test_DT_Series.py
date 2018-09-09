@@ -35,6 +35,12 @@ class TestPandasSeries(unittest.TestCase):
         self.assertTrue(([7, 3] == arr1[[1, 3]]).all())                 #slice by indexes
         self.assertTrue(([4, 7, 3] == arr1[arr1 > 0]).all())            #indexes greater than 0
 
+        arr1 = pd.Series(np.arange(3,))
+        self.assertTrue(([0] == arr1[:1]).all())                        #select by label
+        self.assertTrue(([0, 1] == arr1[:2]).all())                     #select by labels
+        self.assertTrue(([0, 1] == arr1.loc[:1]).all())                 #select by loc using labels
+        self.assertTrue(([0] == arr1.iloc[:1]).all())                   #select by iloc using integers
+
     def test_functions(self):
         arr1 = pd.Series([4, 7, -5, 3], index=['d', 'b', 'a', 'c'])
         self.assertTrue(([8, 14, -10, 6] == arr1 * 2).all())            #values multiplied by 2

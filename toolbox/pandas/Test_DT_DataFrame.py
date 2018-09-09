@@ -71,21 +71,21 @@ class TestPandasDataFrame(unittest.TestCase):
         self.assertTrue(((result == frame[frame['three'] > 5]).all()).all())    #select multiple rows via condition
 
         result = pd.Series([5, 6], index=['two', 'three'])
-        self.assertTrue((result == frame.loc['Colorado', ['two', 'three']]).all())  #select by row and column using loc
+        self.assertTrue((result == frame.loc['Colorado', ['two', 'three']]).all())  #select by row and column with loc
 
         result = pd.Series([1, 5, 9], index=['Ohio', 'Colorado', 'Utah'])
-        self.assertTrue((result == frame.loc[:'Utah', 'two']).all())           #select by row and column using iloc
+        self.assertTrue((result == frame.loc[:'Utah', 'two']).all())           #select by row and column with iloc
 
         result = pd.Series([8, 9, 10, 11], index=['one', 'two', 'three', 'four'])
-        self.assertTrue((result == frame.iloc[2]).all())                        #select by row using iloc
+        self.assertTrue((result == frame.iloc[2]).all())                        #select by row with iloc
 
         result = pd.Series([11, 8, 9], index=['four', 'one', 'two'])
-        self.assertTrue((result == frame.iloc[2, [3, 0, 1]]).all())             #select by row and column using iloc
+        self.assertTrue((result == frame.iloc[2, [3, 0, 1]]).all())             #select by row and column with iloc
 
         result = pd.DataFrame([[7, 4, 5], [11, 8, 9]],
                               columns=['four', 'one', 'two'],
                               index=['Colorado', 'Utah'])
-        self.assertTrue(((result == frame.iloc[[1, 2], [3, 0, 1]]).all()).all())    #select by row and column using iloc
+        self.assertTrue(((result == frame.iloc[[1, 2], [3, 0, 1]]).all()).all())    #select by row and column with iloc
 
         result = pd.DataFrame([[4, 5, 6], [8, 9, 10], [12, 13, 14]],
                               columns=['one', 'two', 'three'],
