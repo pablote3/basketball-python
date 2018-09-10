@@ -136,6 +136,18 @@ class TestPandasDataFrame(unittest.TestCase):
         result = pd.Series([1.0, float('nan'), 4.0, 7.0], index=['a', 'b', 'c', 'd'])
         self.assertTrue((result == frame['Texas']).any())
 
+        frame1 = pd.DataFrame(np.arange(12.).reshape((3, 4)),
+                              columns=list('abcd'))
+        frame2 = pd.DataFrame(np.arange(20.).reshape((4, 5)),
+                              columns=list('abcde'))
+        frame2.loc[1, 'b'] = np.nan
+        frame = frame1.reindex(columns=frame2.columns, fill_value=0)            #reindex columns with fill value
+        self.assertTrue((pd.Index(['a', 'b', 'c', 'd', 'e']) == frame.columns).all())
+        result = pd.Series([0.0, 1.0, 2.0, 3.0, 0], index=['a', 'b', 'c', 'd', 'e'])
+        self.assertTrue(((result == frame[0:1]).all()).all())
+        result = pd.Series([4.0, 5.0, 6.0, 7.0, 0], index=['a', 'b', 'c', 'd', 'e'])
+        self.assertTrue(((result == frame[1:2]).all()).all())
+
     def test_diff_indexes_nan(self):
         frame1 = pd.DataFrame(np.arange(9.).reshape((3, 3)),
                               index=['Ohio', 'Texas', 'Colorado'],
