@@ -136,7 +136,7 @@ class TestPandasDataFrame(unittest.TestCase):
         result = pd.Series([1.0, float('nan'), 4.0, 7.0], index=['a', 'b', 'c', 'd'])
         self.assertTrue((result == frame['Texas']).any())
 
-    def test_join(self):
+    def test_diff_indexes_nan(self):
         frame1 = pd.DataFrame(np.arange(9.).reshape((3, 3)),
                               index=['Ohio', 'Texas', 'Colorado'],
                               columns=list('bcd'))
@@ -150,6 +150,26 @@ class TestPandasDataFrame(unittest.TestCase):
         self.assertTrue(((result == frame[1:2]).any()).any())
         result = pd.Series([9.0, float('nan'), 12.0, float('nan')], index=['b', 'c', 'd', 'e'])
         self.assertTrue(((result == frame[3:4]).any()).any())
+
+    def test_diff_indexes_fill_values(self):
+        frame1 = pd.DataFrame(np.arange(12.).reshape((3, 4)),
+                              columns=list('abcd'))
+        frame2 = pd.DataFrame(np.arange(20.).reshape((4, 5)),
+                              columns=list('abcde'))
+        frame2.loc[1, 'b'] = np.nan
+        frame = frame1 + frame2                                                 #add with nan values
+        self.assertTrue((pd.Index(['a', 'b', 'c', 'd', 'e']) == frame.columns).all())
+        result = pd.Series([0.0, 2.0, 4.0, 6.0, np.nan], index=['a', 'b', 'c', 'd', 'e'])
+        self.assertTrue(((result == frame[0:1]).any()).any())
+        result = pd.Series([9.0, np.nan, 13.0, 15.0, np.nan], index=['a', 'b', 'c', 'd', 'e'])
+        self.assertTrue(((result == frame[1:2]).any()).any())
+
+        frame = frame1.add(frame2, fill_value=0)                                #add with fill value 0
+        self.assertTrue((pd.Index(['a', 'b', 'c', 'd', 'e']) == frame.columns).all())
+        result = pd.Series([0.0, 2.0, 4.0, 6.0, 4.0], index=['a', 'b', 'c', 'd', 'e'])
+        self.assertTrue(((result == frame[0:1]).all()).all())
+        result = pd.Series([9.0, 5.0, 13.0, 15.0, 9.0], index=['a', 'b', 'c', 'd', 'e'])
+        self.assertTrue(((result == frame[1:2]).all()).all())
 
 
 if __name__ == '__main__':
