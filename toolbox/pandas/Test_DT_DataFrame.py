@@ -225,9 +225,13 @@ class TestPandasDataFrame(unittest.TestCase):
         self.assertTrue((result == frame1).all())
 
         f = lambda x: '%.2f'% x
-        frame1 = frame.applymap(f)
+        frame1 = frame.applymap(f)                                              #applymap function to dataFrame
         result = pd.Series(['0.00', '1.00', '2.00'], index=['b', 'd', 'e'])
         self.assertTrue(((result == frame1[0:1]).all()).all())
+
+        series = frame['e'].map(f)                                              #apply function to series
+        result = pd.Series(['2.00', '5.00', '8.00', '11.00'], index=['Utah', 'Ohio', 'Texas', 'Oregon'])
+        self.assertTrue((result == series).all())
 
 
 if __name__ == '__main__':
