@@ -74,6 +74,11 @@ class TestPandasSeries(unittest.TestCase):
                            index=['a', 'c', 'd', 'e', 'f', 'g'])
         self.assertTrue((result == arr1 + arr2).any())                  #inner join
 
+    def test_sort(self):
+        series = pd.Series(range(4), index=['d', 'a', 'b', 'c'])
+        result = pd.Series([1, 2, 3, 0], index=['a', 'b', 'c', 'd'])
+        self.assertTrue((result == series.sort_index()).any())          #sort by index
+
 
 if __name__ == '__main__':
     unittest.main()
