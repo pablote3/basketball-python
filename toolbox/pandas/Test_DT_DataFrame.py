@@ -237,23 +237,41 @@ class TestPandasDataFrame(unittest.TestCase):
         frame = pd.DataFrame(np.arange(8).reshape((2, 4)),
                              index=['three', 'one'],
                              columns=['d', 'a', 'b', 'c'])
-        frame1 = frame.sort_index()                                              #sort by row
+        frame1 = frame.sort_index()                                              #sort by index on rows
         result = pd.Series([4, 5, 6, 7], index=['d', 'a', 'b', 'c'])
         self.assertTrue(((result == frame1[0:1]).all()).all())
         result = pd.Series([0, 1, 2, 3], index=['d', 'a', 'b', 'c'])
         self.assertTrue(((result == frame1[1:2]).all()).all())
 
-        frame1 = frame.sort_index(axis=1)                                        #sort by column
+        frame1 = frame.sort_index(axis=1)                                        #sort by index on columns
         result = pd.Series([1, 2, 3, 0], index=['a', 'b', 'c', 'd'])
         self.assertTrue(((result == frame1[0:1]).all()).all())
         result = pd.Series([5, 6, 7, 4], index=['a', 'b', 'c', 'd'])
         self.assertTrue(((result == frame1[1:2]).all()).all())
 
-        frame1 = frame.sort_index(axis=1, ascending=False)                       #sort by column, descending
+        frame1 = frame.sort_index(axis=1, ascending=False)                       #sort by index on columns, descending
         result = pd.Series([0, 3, 2, 1], index=['d', 'c', 'b', 'a'])
         self.assertTrue(((result == frame1[0:1]).all()).all())
-        result = pd.Series([4,7, 6, 5], index=['d', 'c', 'b', 'a'])
+        result = pd.Series([4, 7, 6, 5], index=['d', 'c', 'b', 'a'])
         self.assertTrue(((result == frame1[1:2]).all()).all())
+
+        frame = pd.DataFrame({'b': [4, 7, -3, 2], 'a': [0, 1, 0, 1]})
+        self.assertTrue(((pd.Series([0, 4], index=['a', 'b']) == frame[0:1]).all()).all())
+        self.assertTrue(((pd.Series([1, 7], index=['a', 'b']) == frame[1:2]).all()).all())
+        self.assertTrue(((pd.Series([0, -3], index=['a', 'b']) == frame[2:3]).all()).all())
+        self.assertTrue(((pd.Series([1, 2], index=['a', 'b']) == frame[3:4]).all()).all())
+
+        frame1 = frame.sort_values(by='b')                                       #sort by single column
+        self.assertTrue(((pd.Series([0, -3], index=['a', 'b']) == frame1[0:1]).all()).all())
+        self.assertTrue(((pd.Series([1, 2], index=['a', 'b']) == frame1[1:2]).all()).all())
+        self.assertTrue(((pd.Series([0, 4], index=['a', 'b']) == frame1[2:3]).all()).all())
+        self.assertTrue(((pd.Series([1, 7], index=['a', 'b']) == frame1[3:4]).all()).all())
+
+        frame1 = frame.sort_values(by=['a', 'b'])                                #sort by multiple columns
+        self.assertTrue(((pd.Series([0, -3], index=['a', 'b']) == frame1[0:1]).all()).all())
+        self.assertTrue(((pd.Series([0, 4], index=['a', 'b']) == frame1[1:2]).all()).all())
+        self.assertTrue(((pd.Series([1, 2], index=['a', 'b']) == frame1[2:3]).all()).all())
+        self.assertTrue(((pd.Series([1, 7], index=['a', 'b']) == frame1[3:4]).all()).all())
 
 
 if __name__ == '__main__':

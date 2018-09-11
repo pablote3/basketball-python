@@ -79,6 +79,14 @@ class TestPandasSeries(unittest.TestCase):
         result = pd.Series([1, 2, 3, 0], index=['a', 'b', 'c', 'd'])
         self.assertTrue((result == series.sort_index()).any())          #sort by index
 
+        series = pd.Series([4, 7, -3, 2])
+        result = pd.Series([-3, 2, 4, 7])
+        self.assertTrue((result == series.sort_index()).any())          #sort by value
+
+        series = pd.Series([4, np.nan, 7, np.nan, -3, 2])
+        result = pd.Series([-3, 2, 4, 7, np.nan, np.nan])
+        self.assertTrue((result == series.sort_index()).any())          #missing items sorted to the end
+
 
 if __name__ == '__main__':
     unittest.main()
