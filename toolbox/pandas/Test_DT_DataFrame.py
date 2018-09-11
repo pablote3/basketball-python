@@ -136,17 +136,15 @@ class TestPandasDataFrame(unittest.TestCase):
         result = pd.Series([1.0, float('nan'), 4.0, 7.0], index=['a', 'b', 'c', 'd'])
         self.assertTrue((result == frame['Texas']).any())
 
-        frame1 = pd.DataFrame(np.arange(12.).reshape((3, 4)),
-                              columns=list('abcd'))
-        frame2 = pd.DataFrame(np.arange(20.).reshape((4, 5)),
-                              columns=list('abcde'))
+        frame1 = pd.DataFrame(np.arange(12.).reshape((3, 4)), columns=list('abcd'))
+        frame2 = pd.DataFrame(np.arange(20.).reshape((4, 5)), columns=list('abcde'))
         frame2.loc[1, 'b'] = np.nan
         frame = frame1.reindex(columns=frame2.columns, fill_value=0)            #reindex columns with fill value
         self.assertTrue((pd.Index(['a', 'b', 'c', 'd', 'e']) == frame.columns).all())
         result = pd.Series([0.0, 1.0, 2.0, 3.0, 0], index=['a', 'b', 'c', 'd', 'e'])
-        self.assertTrue(((result == frame[0:1]).all()).all())
+        self.assertTrue(((result == frame.iloc[[0]]).all()).all())
         result = pd.Series([4.0, 5.0, 6.0, 7.0, 0], index=['a', 'b', 'c', 'd', 'e'])
-        self.assertTrue(((result == frame[1:2]).all()).all())
+        self.assertTrue(((result == frame.iloc[[1]]).all()).all())
 
     def test_different_indexes_nan(self):
         frame1 = pd.DataFrame(np.arange(9.).reshape((3, 3)),
@@ -159,9 +157,9 @@ class TestPandasDataFrame(unittest.TestCase):
         self.assertTrue((pd.Index(['Colorado', 'Ohio', 'Oregon', 'Texas', 'Utah']) == frame.index).all())
         self.assertTrue((pd.Index(['b', 'c', 'd', 'e']) == frame.columns).all())
         result = pd.Series([3.0, float('nan'), 6.0, float('nan')], index=['b', 'c', 'd', 'e'])
-        self.assertTrue(((result == frame[1:2]).any()).any())
+        self.assertTrue(((result == frame.iloc[[1]]).any()).any())
         result = pd.Series([9.0, float('nan'), 12.0, float('nan')], index=['b', 'c', 'd', 'e'])
-        self.assertTrue(((result == frame[3:4]).any()).any())
+        self.assertTrue(((result == frame.iloc[[3]]).any()).any())
 
     def test_different_indexes_fill_values(self):
         frame1 = pd.DataFrame(np.arange(12.).reshape((3, 4)),
@@ -172,39 +170,39 @@ class TestPandasDataFrame(unittest.TestCase):
         frame = frame1 + frame2                                                 #add with nan values
         self.assertTrue((pd.Index(['a', 'b', 'c', 'd', 'e']) == frame.columns).all())
         result = pd.Series([0.0, 2.0, 4.0, 6.0, np.nan], index=['a', 'b', 'c', 'd', 'e'])
-        self.assertTrue(((result == frame[0:1]).any()).any())
+        self.assertTrue(((result == frame.iloc[[0]]).any()).any())
         result = pd.Series([9.0, np.nan, 13.0, 15.0, np.nan], index=['a', 'b', 'c', 'd', 'e'])
-        self.assertTrue(((result == frame[1:2]).any()).any())
+        self.assertTrue(((result == frame.iloc[[1]]).any()).any())
 
         frame = frame1.add(frame2, fill_value=0)                                #add with fill value 0
         self.assertTrue((pd.Index(['a', 'b', 'c', 'd', 'e']) == frame.columns).all())
         result = pd.Series([0.0, 2.0, 4.0, 6.0, 4.0], index=['a', 'b', 'c', 'd', 'e'])
-        self.assertTrue(((result == frame[0:1]).all()).all())
+        self.assertTrue(((result == frame.iloc[[0]]).all()).all())
         result = pd.Series([9.0, 5.0, 13.0, 15.0, 9.0], index=['a', 'b', 'c', 'd', 'e'])
-        self.assertTrue(((result == frame[1:2]).all()).all())
+        self.assertTrue(((result == frame.iloc[[1]]).all()).all())
 
     def test_apply_series_operations(self):
         frame = pd.DataFrame(np.arange(12.).reshape((4, 3)),
                              columns=list('bde'),
                              index=['Utah', 'Ohio', 'Texas', 'Oregon'])
         result = pd.Series([0.0, 1.0, 2.0], index=['b', 'd', 'e'])
-        self.assertTrue(((result == frame[0:1]).all()).all())
+        self.assertTrue(((result == frame.iloc[[0]]).all()).all())
         result = pd.Series([3.0, 4.0, 5.0], index=['b', 'd', 'e'])
-        self.assertTrue(((result == frame[1:2]).all()).all())
+        self.assertTrue(((result == frame.iloc[[1]]).all()).all())
 
         series = frame.iloc[0]
         frame1 = frame - series                                                 #subtract row 1 from frame
         result = pd.Series([0.0, 0.0, 0.0], index=['b', 'd', 'e'])
-        self.assertTrue(((result == frame1[0:1]).all()).all())
+        self.assertTrue(((result == frame1.iloc[[0]]).all()).all())
         result = pd.Series([3.0, 3.0, 3.0], index=['b', 'd', 'e'])
-        self.assertTrue(((result == frame1[1:2]).all()).all())
+        self.assertTrue(((result == frame1.iloc[[1]]).all()).all())
 
         series = frame['d']
         frame1 = frame.sub(series, axis='index')                                #subtract column d from frame
         result = pd.Series([-1.0, 0.0, 1.0], index=['b', 'd', 'e'])
-        self.assertTrue(((result == frame1[0:1]).all()).all())
+        self.assertTrue(((result == frame1.iloc[[0]]).all()).all())
         result = pd.Series([-1.0, 0.0, 1.0], index=['b', 'd', 'e'])
-        self.assertTrue(((result == frame1[1:2]).all()).all())
+        self.assertTrue(((result == frame1.iloc[[1]]).all()).all())
 
     def test_apply_function(self):
         frame = pd.DataFrame(np.arange(12.).reshape((4, 3)),
@@ -256,22 +254,22 @@ class TestPandasDataFrame(unittest.TestCase):
         self.assertTrue(((result == frame1[1:2]).all()).all())
 
         frame = pd.DataFrame({'b': [4, 7, -3, 2], 'a': [0, 1, 0, 1]})
-        self.assertTrue(((pd.Series([0, 4], index=['a', 'b']) == frame[0:1]).all()).all())
-        self.assertTrue(((pd.Series([1, 7], index=['a', 'b']) == frame[1:2]).all()).all())
-        self.assertTrue(((pd.Series([0, -3], index=['a', 'b']) == frame[2:3]).all()).all())
-        self.assertTrue(((pd.Series([1, 2], index=['a', 'b']) == frame[3:4]).all()).all())
+        self.assertTrue(((pd.Series([0, 4], index=['a', 'b']) == frame.iloc[[0]]).all()).all())
+        self.assertTrue(((pd.Series([1, 7], index=['a', 'b']) == frame.iloc[[1]]).all()).all())
+        self.assertTrue(((pd.Series([0, -3], index=['a', 'b']) == frame.iloc[[2]]).all()).all())
+        self.assertTrue(((pd.Series([1, 2], index=['a', 'b']) == frame.iloc[[3]]).all()).all())
 
         frame1 = frame.sort_values(by='b')                                       #sort by single column
-        self.assertTrue(((pd.Series([0, -3], index=['a', 'b']) == frame1[0:1]).all()).all())
-        self.assertTrue(((pd.Series([1, 2], index=['a', 'b']) == frame1[1:2]).all()).all())
-        self.assertTrue(((pd.Series([0, 4], index=['a', 'b']) == frame1[2:3]).all()).all())
-        self.assertTrue(((pd.Series([1, 7], index=['a', 'b']) == frame1[3:4]).all()).all())
+        self.assertTrue(((pd.Series([0, -3], index=['a', 'b']) == frame1.iloc[[0]]).all()).all())
+        self.assertTrue(((pd.Series([1, 2], index=['a', 'b']) == frame1.iloc[[1]]).all()).all())
+        self.assertTrue(((pd.Series([0, 4], index=['a', 'b']) == frame1.iloc[[2]]).all()).all())
+        self.assertTrue(((pd.Series([1, 7], index=['a', 'b']) == frame1.iloc[[3]]).all()).all())
 
         frame1 = frame.sort_values(by=['a', 'b'])                                #sort by multiple columns
-        self.assertTrue(((pd.Series([0, -3], index=['a', 'b']) == frame1[0:1]).all()).all())
-        self.assertTrue(((pd.Series([0, 4], index=['a', 'b']) == frame1[1:2]).all()).all())
-        self.assertTrue(((pd.Series([1, 2], index=['a', 'b']) == frame1[2:3]).all()).all())
-        self.assertTrue(((pd.Series([1, 7], index=['a', 'b']) == frame1[3:4]).all()).all())
+        self.assertTrue(((pd.Series([0, -3], index=['a', 'b']) == frame1.iloc[[0]]).all()).all())
+        self.assertTrue(((pd.Series([0, 4], index=['a', 'b']) == frame1.iloc[[1]]).all()).all())
+        self.assertTrue(((pd.Series([1, 2], index=['a', 'b']) == frame1.iloc[[2]]).all()).all())
+        self.assertTrue(((pd.Series([1, 7], index=['a', 'b']) == frame1.iloc[[3]]).all()).all())
 
 
 if __name__ == '__main__':
