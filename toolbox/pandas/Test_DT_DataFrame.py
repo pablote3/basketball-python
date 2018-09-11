@@ -92,7 +92,7 @@ class TestPandasDataFrame(unittest.TestCase):
                               index=['Colorado', 'Utah', 'New York'])
         self.assertTrue(((result == frame.iloc[:, :3][frame.three > 5]).all()).all())  #select row, column using where
 
-    def test_functions(self):
+    def test_dataframe_functions(self):
         frame = pd.DataFrame(np.arange(25).reshape((5, 5)),
                              index=['Ohio', 'Colorado', 'Utah', 'Iowa', 'Texas'],
                              columns=['one', 'two', 'three', 'four', 'five'])
@@ -148,7 +148,7 @@ class TestPandasDataFrame(unittest.TestCase):
         result = pd.Series([4.0, 5.0, 6.0, 7.0, 0], index=['a', 'b', 'c', 'd', 'e'])
         self.assertTrue(((result == frame[1:2]).all()).all())
 
-    def test_diff_indexes_nan(self):
+    def test_different_indexes_nan(self):
         frame1 = pd.DataFrame(np.arange(9.).reshape((3, 3)),
                               index=['Ohio', 'Texas', 'Colorado'],
                               columns=list('bcd'))
@@ -163,7 +163,7 @@ class TestPandasDataFrame(unittest.TestCase):
         result = pd.Series([9.0, float('nan'), 12.0, float('nan')], index=['b', 'c', 'd', 'e'])
         self.assertTrue(((result == frame[3:4]).any()).any())
 
-    def test_diff_indexes_fill_values(self):
+    def test_different_indexes_fill_values(self):
         frame1 = pd.DataFrame(np.arange(12.).reshape((3, 4)),
                               columns=list('abcd'))
         frame2 = pd.DataFrame(np.arange(20.).reshape((4, 5)),
@@ -182,6 +182,29 @@ class TestPandasDataFrame(unittest.TestCase):
         self.assertTrue(((result == frame[0:1]).all()).all())
         result = pd.Series([9.0, 5.0, 13.0, 15.0, 9.0], index=['a', 'b', 'c', 'd', 'e'])
         self.assertTrue(((result == frame[1:2]).all()).all())
+
+    def test_apply_series_operations(self):
+        frame = pd.DataFrame(np.arange(12.).reshape((4, 3)),
+                             columns=list('bde'),
+                             index=['Utah', 'Ohio', 'Texas', 'Oregon'])
+        result = pd.Series([0.0, 1.0, 2.0], index=['b', 'd', 'e'])
+        self.assertTrue(((result == frame[0:1]).all()).all())
+        result = pd.Series([3.0, 4.0, 5.0], index=['b', 'd', 'e'])
+        self.assertTrue(((result == frame[1:2]).all()).all())
+
+        series = frame.iloc[0]
+        frame1 = frame - series                                                 #subtract row 1 from frame
+        result = pd.Series([0.0, 0.0, 0.0], index=['b', 'd', 'e'])
+        self.assertTrue(((result == frame1[0:1]).all()).all())
+        result = pd.Series([3.0, 3.0, 3.0], index=['b', 'd', 'e'])
+        self.assertTrue(((result == frame1[1:2]).all()).all())
+
+        series = frame['d']
+        frame1 = frame.sub(series, axis='index')                                #subtract column d from frame
+        result = pd.Series([-1.0, 0.0, 1.0], index=['b', 'd', 'e'])
+        self.assertTrue(((result == frame1[0:1]).all()).all())
+        result = pd.Series([-1.0, 0.0, 1.0], index=['b', 'd', 'e'])
+        self.assertTrue(((result == frame1[1:2]).all()).all())
 
 
 if __name__ == '__main__':
