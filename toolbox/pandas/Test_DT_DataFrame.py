@@ -224,10 +224,9 @@ class TestPandasDataFrame(unittest.TestCase):
         result = pd.Series([2.0, 8.0, 14.0, 20.0], index=['Utah', 'Ohio', 'Texas', 'Oregon'])
         self.assertTrue((result == frame1).all())
 
-        f = lambda x: '%.2f' % x
+        f = lambda x: '%.2f'% x
         frame1 = frame.applymap(f)
-        result = pd.Series([0.0, 1.0, 2.0], index=['b', 'd', 'e'])
-        #result = pd.Series([0.0, 1.0, 2.0], index=['b', 'd', 'e'])
+        result = pd.Series(['0.00', '1.00', '2.00'], index=['b', 'd', 'e'])
         self.assertTrue(((result == frame1[0:1]).all()).all())
 
 
