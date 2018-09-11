@@ -206,6 +206,30 @@ class TestPandasDataFrame(unittest.TestCase):
         result = pd.Series([-1.0, 0.0, 1.0], index=['b', 'd', 'e'])
         self.assertTrue(((result == frame1[1:2]).all()).all())
 
+    def test_apply_function(self):
+        frame = pd.DataFrame(np.arange(12.).reshape((4, 3)),
+                             columns=list('bde'),
+                             index=['Utah', 'Ohio', 'Texas', 'Oregon'])
+        result = pd.Series([0.0, 1.0, 2.0], index=['b', 'd', 'e'])
+        self.assertTrue(((result == frame[0:1]).all()).all())
+        result = pd.Series([3.0, 4.0, 5.0], index=['b', 'd', 'e'])
+        self.assertTrue(((result == frame[1:2]).all()).all())
+
+        f = lambda x: x.max() + x.min()
+        frame1 = frame.apply(f)                                                 #applies function on each column
+        result = pd.Series([9.0, 11.0, 13.0], index=['b', 'd', 'e'])
+        self.assertTrue((result == frame1).all())
+
+        frame1 = frame.apply(f, axis='columns')                                 #applies function on each row
+        result = pd.Series([2.0, 8.0, 14.0, 20.0], index=['Utah', 'Ohio', 'Texas', 'Oregon'])
+        self.assertTrue((result == frame1).all())
+
+        f = lambda x: '%.2f' % x
+        frame1 = frame.applymap(f)
+        result = pd.Series([0.0, 1.0, 2.0], index=['b', 'd', 'e'])
+        #result = pd.Series([0.0, 1.0, 2.0], index=['b', 'd', 'e'])
+        self.assertTrue(((result == frame1[0:1]).all()).all())
+
 
 if __name__ == '__main__':
     unittest.main()
