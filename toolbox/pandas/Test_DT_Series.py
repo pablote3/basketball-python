@@ -95,6 +95,11 @@ class TestPandasSeries(unittest.TestCase):
         result = pd.Series([6.0, 1.0, 7.0, 4.0, 3.0, 2.0, 5.0])
         self.assertTrue((result == series.rank(method='first')).any())  #ties broken by observance order
 
+    def test_duplicate_labels(self):
+        series = pd.Series(range(5), index=['a', 'a', 'b', 'b', 'c'])
+        self.assertFalse(series.index.is_unique)
+        self.assertTrue((pd.Series([0, 1], index=['a', 'a']) == series['a']).any())
+
 
 if __name__ == '__main__':
     unittest.main()
