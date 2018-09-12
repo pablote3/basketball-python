@@ -100,6 +100,16 @@ class TestPandasSeries(unittest.TestCase):
         self.assertFalse(series.index.is_unique)
         self.assertTrue((pd.Series([0, 1], index=['a', 'a']) == series['a']).any())
 
+    def test_stats(self):
+        series = pd.Series(['a', 'a', 'b', 'c'] * 4)
+        self.assertEqual(16, series.describe().iloc[0])                 #count
+        series = pd.Series(['a', 'a', 'b', 'c'] * 4)
+        self.assertEqual(3, series.describe().iloc[1])                  #unique
+        series = pd.Series(['a', 'a', 'b', 'c'] * 4)
+        self.assertEqual('a', series.describe().iloc[2])                #top
+        series = pd.Series(['a', 'a', 'b', 'c'] * 4)
+        self.assertEqual(8, series.describe().iloc[3])                  #freq
+
 
 if __name__ == '__main__':
     unittest.main()

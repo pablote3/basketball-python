@@ -279,6 +279,44 @@ class TestPandasDataFrame(unittest.TestCase):
         self.assertTrue(((pd.Series([2.0, 1.0, 3.0], index=['a', 'b', 'c']) == frame.iloc[[2]]).all()).all())
         self.assertTrue(((pd.Series([2.0, 3.0, 1.0], index=['a', 'b', 'c']) == frame.iloc[[3]]).all()).all())
 
+    def test_stats(self):
+        frame = pd.DataFrame([[1.4, np.nan], [7.1, -4.5], [np.nan, np.nan], [0.75, -1.3]],
+                             index=['a', 'b', 'c', 'd'],
+                             columns=['one', 'two'])
+        series = pd.Series([9.25, -5.80], index=['one', 'two'])
+        self.assertTrue(((series == frame.sum()).all()).all())                   #sum by columns
+
+        series = pd.Series([1.40, 2.60, 0.00, -0.55], index=['a', 'b', 'c', 'd'])
+        self.assertTrue(((series == frame.sum(axis='columns')).any()).all())     #sum by columns
+
+        series = pd.Series([np.nan, 1.300, np.nan, -0.275], index=['a', 'b', 'c', 'd'])
+        self.assertTrue(((series == frame.mean(axis='columns', skipna=False)).any()).all())   #mean by columns, inc na
+
+        series = pd.Series(['b', 'd'], index=['one', 'two'])
+        self.assertTrue(((series == frame.idxmax()).all()).all())                #index of row max values
+
+        series = pd.Series([1.4, np.nan], index=['one', 'two'])
+        self.assertTrue(((series == frame.cumsum().iloc[[0]]).any()).any())      #accumulate row values
+        series = pd.Series([8.5, -4.5], index=['one', 'two'])
+        self.assertTrue(((series == frame.cumsum().iloc[[1]]).all()).all())
+
+        series = pd.Series([3.0, 2.0], index=['one', 'two'])
+        self.assertTrue(((series == frame.describe().iloc[[0]]).all()).any())    #count
+        series = pd.Series([3.1, -2.9], index=['one', 'two'])
+        self.assertTrue(((series == frame.describe().iloc[[1]]).all()).any())    #mean
+        series = pd.Series([3.5, 2.3], index=['one', 'two'])
+        self.assertFalse(((series == frame.describe().iloc[[2]]).all()).all())   #std
+        series = pd.Series([0.75, -4.5], index=['one', 'two'])
+        self.assertTrue(((series == frame.describe().iloc[[3]]).all()).all())    #min
+        series = pd.Series([1.075, -3.7], index=['one', 'two'])
+        self.assertTrue(((series == frame.describe().iloc[[4]]).all()).all())    #25%
+        series = pd.Series([1.4, -2.9], index=['one', 'two'])
+        self.assertTrue(((series == frame.describe().iloc[[5]]).all()).all())    #50%
+        series = pd.Series([4.25, -2.1], index=['one', 'two'])
+        self.assertTrue(((series == frame.describe().iloc[[6]]).all()).all())    #75%
+        series = pd.Series([7.1, -1.30], index=['one', 'two'])
+        self.assertTrue(((series == frame.describe().iloc[[7]]).all()).all())    #max
+
 
 if __name__ == '__main__':
     unittest.main()
