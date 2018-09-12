@@ -296,12 +296,12 @@ class TestPandasDataFrame(unittest.TestCase):
         self.assertTrue(((series == frame.idxmax()).all()).all())                #index of row max values
 
         series = pd.Series([1.4, np.nan], index=['one', 'two'])
-        self.assertTrue(((series == frame.cumsum().iloc[[0]]).any()).any())      #accumulate row values
+        self.assertTrue(((series == frame.cumsum().iloc[[0]]).any()).any())      #cumulative sum of row values
         series = pd.Series([8.5, -4.5], index=['one', 'two'])
         self.assertTrue(((series == frame.cumsum().iloc[[1]]).all()).all())
 
         series = pd.Series([3.0, 2.0], index=['one', 'two'])
-        self.assertTrue(((series == frame.describe().iloc[[0]]).all()).any())    #count
+        self.assertTrue(((series == frame.describe().iloc[[0]]).all()).any())    #count non na values
         series = pd.Series([3.1, -2.9], index=['one', 'two'])
         self.assertTrue(((series == frame.describe().iloc[[1]]).all()).any())    #mean
         series = pd.Series([3.5, 2.3], index=['one', 'two'])
