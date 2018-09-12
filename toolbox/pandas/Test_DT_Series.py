@@ -77,15 +77,23 @@ class TestPandasSeries(unittest.TestCase):
     def test_sort(self):
         series = pd.Series(range(4), index=['d', 'a', 'b', 'c'])
         result = pd.Series([1, 2, 3, 0], index=['a', 'b', 'c', 'd'])
-        self.assertTrue((result == series.sort_index()).any())          #sort by index
+        self.assertTrue((result == series.sort_index()).all())          #sort by index
 
-        series = pd.Series([4, 7, -3, 2])
-        result = pd.Series([-3, 2, 4, 7])
-        self.assertTrue((result == series.sort_index()).any())          #sort by value
+        series = pd.Series([4, 7, -3, 2], index=['d', 'a', 'b', 'c'])
+        result = pd.Series([-3, 2, 4, 7], index=['b', 'c', 'd', 'a'])
+        self.assertTrue((result == series.sort_values()).all())         #sort by value
 
-        series = pd.Series([4, np.nan, 7, np.nan, -3, 2])
-        result = pd.Series([-3, 2, 4, 7, np.nan, np.nan])
-        self.assertTrue((result == series.sort_index()).any())          #missing items sorted to the end
+        series = pd.Series([4, np.nan, 7, np.nan, -3, 2], index=['d', 'a', 'b', 'c', 'f', 'e'])
+        result = pd.Series([-3, 2, 4, 7, np.nan, np.nan], index=['f', 'e', 'd', 'b', 'a', 'c'])
+        self.assertTrue((result == series.sort_values()).any())         #missing items sorted to the end
+
+    def test_rank(self):
+        series = pd.Series([7, -5, 7, 4, 2, 0, 4])
+        result = pd.Series([6.5, 1.0, 6.5, 4.5, 3.0, 2.0, 4.5])
+        self.assertTrue((result == series.rank()).any())                #ties broken by taking mean
+
+        result = pd.Series([6.0, 1.0, 7.0, 4.0, 3.0, 2.0, 5.0])
+        self.assertTrue((result == series.rank(method='first')).any())  #ties broken by observance order
 
 
 if __name__ == '__main__':

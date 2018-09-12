@@ -271,6 +271,14 @@ class TestPandasDataFrame(unittest.TestCase):
         self.assertTrue(((pd.Series([1, 2], index=['a', 'b']) == frame1.iloc[[2]]).all()).all())
         self.assertTrue(((pd.Series([1, 7], index=['a', 'b']) == frame1.iloc[[3]]).all()).all())
 
+    def test_rank(self):
+        frame = pd.DataFrame({'b': [4.3, 7, -3, 2], 'a': [0, 1, 0, 1], 'c': [-2, 5, 8, -2.5]})
+        frame = frame.rank(axis='columns')
+        self.assertTrue(((pd.Series([2.0, 3.0, 1.0], index=['a', 'b', 'c']) == frame.iloc[[0]]).all()).all())
+        self.assertTrue(((pd.Series([1.0, 3.0, 2.0], index=['a', 'b', 'c']) == frame.iloc[[1]]).all()).all())
+        self.assertTrue(((pd.Series([2.0, 1.0, 3.0], index=['a', 'b', 'c']) == frame.iloc[[2]]).all()).all())
+        self.assertTrue(((pd.Series([2.0, 3.0, 1.0], index=['a', 'b', 'c']) == frame.iloc[[3]]).all()).all())
+
 
 if __name__ == '__main__':
     unittest.main()
