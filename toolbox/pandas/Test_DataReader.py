@@ -17,8 +17,21 @@ class TestPandasDataReader(unittest.TestCase):
         self.assertTrue(((result == df).all()).all())
 
         result = pd.DataFrame([[1, 2, 3, 4, 'hello'], [5, 6, 7, 8, 'world'], [9, 10, 11, 12, 'foo']],
-                              index=[0, 1, 2])
-        df = pd.read_csv(self.path + '/paulNoHeader.csv', header=None)                #read csv without header
+                              index=[0, 1, 2],
+                              columns=[0, 1, 2, 3, 4])
+        df = pd.read_csv(self.path + '/paulNoHeader.csv', header=None)                #read csv without header, default
+        self.assertTrue(((result == df).all()).all())
+
+        result = pd.DataFrame([[1, 2, 3, 4, 'hello'], [5, 6, 7, 8, 'world'], [9, 10, 11, 12, 'foo']],
+                              index=[0, 1, 2],
+                              columns=['a', 'b', 'c', 'd', 'message'])
+        df = pd.read_csv(self.path + '/paulNoHeader.csv', names=['a', 'b', 'c', 'd', 'message'])  #specify header names
+        self.assertTrue(((result == df).all()).all())
+
+        result = pd.DataFrame([[1, 2, 3, 4], [5, 6, 7, 8], [9, 10, 11, 12]],
+                              index=['hello', 'world', 'foo'],
+                              columns=['a', 'b', 'c', 'd'])
+        df = pd.read_csv(self.path + '/paulHeader.csv', index_col='message')                               #read csv with header
         self.assertTrue(((result == df).all()).all())
 
     def test_read_table(self):
