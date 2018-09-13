@@ -55,6 +55,20 @@ class TestPandasSeries(unittest.TestCase):
         arr1.drop(['Ohio', 'Utah'], inplace=True)                       #drop rows inplace
         self.assertTrue((pd.Index(['Texas']) == arr1.index).all())
 
+        series = pd.Series(['c', 'a', 'd', 'a', 'a', 'b', 'b', 'c', 'c'])
+        #result = pd.Series(['c', 'a', 'd', 'b'])
+        #self.assertTrue((result == series.unique()).all())             #unique values; returns series or array
+        self.assertEqual(4, series.unique().size)
+        #result = pd.Series([3, 3, 2, 1], index=['a', 'c', 'b', 'd'])
+        #self.assertTrue((result == series.value_counts()).all())       #count values; returns series or array
+        self.assertEqual(4, series.value_counts().size)
+
+        mask = series.isin(['b', 'c'])
+        result = pd.Series([True, False, False, False, False, True, True, True, True])
+        self.assertTrue((result == mask).all())                         #set membership check
+        result = pd.Series(['c', 'b', 'b', 'c', 'c'], index=[0, 5, 6, 7, 8])
+        self.assertTrue((result == series[mask]).all())                 #filering dataset
+
     def test_reindex(self):
         arr1 = pd.Series([4.5, 7.2, -5.3, 3.6], index=['d', 'b', 'a', 'c'])
         self.assertEqual(4, arr1.index.size)
