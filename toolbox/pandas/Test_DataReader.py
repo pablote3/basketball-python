@@ -16,6 +16,13 @@ class TestPandasDataReader(unittest.TestCase):
         df = pd.read_csv(self.path + '/paulHeader.csv')
         self.assertTrue(((result == df).all()).all())
 
+    def test_read_table(self):
+        result = pd.DataFrame([[1, 2, 3, 4, 'hello'], [5, 6, 7, 8, 'world'], [9, 10, 11, 12, 'foo']],
+                              index=[0, 1, 2],
+                              columns=['a', 'b', 'c', 'd', 'message'])
+        df = pd.read_table(self.path + '/paulHeader.csv', sep=',')
+        self.assertTrue(((result == df).all()).all())
+
     # def test_read_web(self):
         # import pandas_datareader.data as web
         # all_data = {ticker: web.get_data_yahoo(ticker)
