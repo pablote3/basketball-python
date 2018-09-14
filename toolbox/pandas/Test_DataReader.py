@@ -42,6 +42,31 @@ class TestPandasDataReader(unittest.TestCase):
         df = pd.read_csv(self.path + '/paulHierarchialIndex.csv', index_col=['key1', 'key2'])  #hierarchial index
         self.assertTrue(((result == df).all()).all())
 
+        result = pd.DataFrame([['one', 1, 2, 3.0, 4, np.nan],
+                               ['two', 5, 6, np.nan, 8, 'world'],
+                               ['three', 9, 10, 11.0, 12, 'foo']],
+                              columns=['something', 'a', 'b', 'c', 'd', 'message'])
+        df = pd.read_csv(self.path + '/paulMissingData.csv')                          #read NaN and null
+        self.assertTrue(((result == df).any()).all())
+        df = pd.read_csv(self.path + '/paulMissingData.csv', na_values=['NULL'])      #set NaN values to null
+        self.assertTrue(((result == df).any()).all())
+
+        result = pd.DataFrame([['one', 1, 2, 3.0, 4, np.nan],
+                               ['two', 5, 6, np.nan, 8, 'world'],
+                               ['three', 9, 10, 11.0, 12, 'foo']],
+                              columns=['something', 'a', 'b', 'c', 'd', 'message'])
+        df = pd.read_csv(self.path + '/paulMissingData.csv')                          #missing data
+        self.assertTrue(((result == df).any()).all())
+
+        self.assertTrue(((result == df).any()).all())
+
+        result = pd.DataFrame([[False, False, False, False, False, True],
+                               [False, False, False, True, False, False],
+                               [False, False, False, False, False, False]],
+                              columns=['something', 'a', 'b', 'c', 'd', 'message'])
+        df = pd.read_csv(self.path + '/paulMissingData.csv')                          #missing data, isnull
+        self.assertTrue(((result == pd.isnull(df)).all()).all())
+
     def test_read_table(self):
         result = pd.DataFrame([[1, 2, 3, 4, 'hello'], [5, 6, 7, 8, 'world'], [9, 10, 11, 12, 'foo']],
                               index=[0, 1, 2],
