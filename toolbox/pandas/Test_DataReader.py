@@ -52,12 +52,11 @@ class TestPandasDataReader(unittest.TestCase):
         self.assertTrue(((result == df).any()).all())
 
         result = pd.DataFrame([['one', 1, 2, 3.0, 4, np.nan],
-                               ['two', 5, 6, np.nan, 8, 'world'],
-                               ['three', 9, 10, 11.0, 12, 'foo']],
+                               [np.nan, 5, 6, np.nan, 8, 'world'],
+                               ['three', 9, 10, 11.0, 12, np.nan]],
                               columns=['something', 'a', 'b', 'c', 'd', 'message'])
-        df = pd.read_csv(self.path + '/paulMissingData.csv')                          #missing data
-        self.assertTrue(((result == df).any()).all())
-
+        sentinels = {'message': ['foo', 'NA'], 'something': ['two']}
+        df = pd.read_csv(self.path + '/paulMissingData.csv', na_values=sentinels)     #sentinal specified by column
         self.assertTrue(((result == df).any()).all())
 
         result = pd.DataFrame([[False, False, False, False, False, True],
