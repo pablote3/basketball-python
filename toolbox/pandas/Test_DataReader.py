@@ -31,7 +31,15 @@ class TestPandasDataReader(unittest.TestCase):
         result = pd.DataFrame([[1, 2, 3, 4], [5, 6, 7, 8], [9, 10, 11, 12]],
                               index=['hello', 'world', 'foo'],
                               columns=['a', 'b', 'c', 'd'])
-        df = pd.read_csv(self.path + '/paulHeader.csv', index_col='message')                               #read csv with header
+        df = pd.read_csv(self.path + '/paulHeader.csv', index_col='message')          #read csv with header
+        self.assertTrue(((result == df).all()).all())
+
+        arrays = [np.array(['one', 'one', 'one', 'one', 'two', 'two', 'two', 'two']),
+                  np.array(['a', 'b', 'c', 'd', 'a', 'b', 'c', 'd'])]
+        result = pd.DataFrame([[1, 2], [3, 4], [5, 6], [7, 8], [9, 10], [11, 12], [13, 14], [15, 16]],
+                              index=arrays,
+                              columns=['value1', 'value2'])
+        df = pd.read_csv(self.path + '/paulHierarchialIndex.csv', index_col=['key1', 'key2'])  #hierarchial index
         self.assertTrue(((result == df).all()).all())
 
     def test_read_table(self):
