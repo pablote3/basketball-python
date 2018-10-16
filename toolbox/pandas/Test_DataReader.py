@@ -69,8 +69,7 @@ class TestPandasDataReader(unittest.TestCase):
         df = pd.read_csv(self.path + '/paulHeader.csv', nrows=2)                      #read n number of rows
         self.assertEqual((2, 5), df.shape)
 
-
-def test_read_table(self):
+    def test_read_table(self):
         result = pd.DataFrame([[1, 2, 3, 4, 'hello'], [5, 6, 7, 8, 'world'], [9, 10, 11, 12, 'foo']],
                               index=[0, 1, 2],
                               columns=['a', 'b', 'c', 'd', 'message'])
@@ -104,6 +103,19 @@ def test_read_table(self):
     #     series = pd.Series([-0.066761, -0.017556, -0.162330, -0.087171], index=['AAPL', 'GOOG', 'IBM', 'MSFT'])
     #     self.assertFalse(((series == returns.corrwith(volume)).all()).all())          #correlation with value
 
+    def test_write_table(self):
+        df = pd.DataFrame([['one', 1, 2, 3.0, 4, np.nan],
+                           [np.nan, 5, 6, np.nan, 8, 'world'],
+                           ['three', 9, 10, 11.0, 12, np.nan]],
+                          columns=['something', 'a', 'b', 'c', 'd', 'message'])
+        df.to_csv(self.path + '/comma_del.csv')
 
-if __name__ == '__main__':
-    unittest.main()
+        df.to_csv(self.path + '/pipe_del.csv', sep='|')
+
+        df.to_csv(self.path + '/inc_null.csv', na_rep='NULL')
+
+    @classmethod
+    def tearDownClass(cls):
+        os.remove(cls.path + "/comma_del.csv")
+        os.remove(cls.path + "/pipe_del.csv")
+        os.remove(cls.path + "/inc_null.csv")
