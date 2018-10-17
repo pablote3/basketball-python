@@ -103,6 +103,21 @@ class TestPandasDataReader(unittest.TestCase):
     #     series = pd.Series([-0.066761, -0.017556, -0.162330, -0.087171], index=['AAPL', 'GOOG', 'IBM', 'MSFT'])
     #     self.assertFalse(((series == returns.corrwith(volume)).all()).all())          #correlation with value
 
+    def test_read_json(self):
+        import json
+        obj = """
+        {"name": "Wes",
+         "places_lived": ["United States", "Spain", "Germany"],
+         "pet": null,
+         "siblings": [{"name": "Scott", "age": 30, "pets": ["Zues", "Zuko"]},
+                      {"name": "Katie", "age": 38, "pets": ["Sixes", "Stache", "Cisco"]}]
+        }
+        """
+        jsn = json.loads(obj)
+        siblings = pd.DataFrame(jsn['siblings'], columns=['name', 'age'])
+        result = pd.DataFrame([['Scott', 30], ['Katie', 38]], columns=['name', 'age'])
+        self.assertTrue(((result == siblings).all()).all())
+
     def test_write_table(self):
         df = pd.DataFrame([['one', 1, 2, 3.0, 4, np.nan],
                            [np.nan, 5, 6, np.nan, 8, 'world'],
